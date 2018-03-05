@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		{{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+		                <div class="form-group">
+                    {{ form_label(form.recherche, null, {'label_attr': {'class': 'control-label col-sm-3'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.recherche, { 'attr': {'class': 'form-control'}}) }}
+                    </div> {{ form_errors(form.recherche) }}
+                </div>
+                                {{ form_rest(form) }}
+                {{ form_end(form) }}
+	</div>
+{% endblock %}
