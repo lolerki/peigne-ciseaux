@@ -16,14 +16,14 @@ class DefaultController extends Controller
     {
 
         //formulaire recherche
-        $rechercheForm = $this->get('form.factory')->create(new RechercheType());
+        $rechercheForm = $this->createForm(RechercheType::class);
         $rechercheForm->handleRequest($request);
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
+   //     if ($form->isSubmitted() && $form->isValid()) {
         // $form->getData() holds the submitted values
         // but, the original `$task` variable has also been updated
-        $task = $form->getData();
+    //    $task = $form->getData();
 
         // ... perform some action, such as saving the task to the database
         // for example, if Task is a Doctrine entity, save it!
@@ -31,8 +31,8 @@ class DefaultController extends Controller
         // $em->persist($task);
         // $em->flush();
 
-        return $this->redirectToRoute('task_success');
-    }
+   //     return $this->redirectToRoute('task_success');
+  //  }
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
