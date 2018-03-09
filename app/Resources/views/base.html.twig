@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Peigne & ciseaux{% endblock %}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Peigne & Ciseaux{% endblock %}</title>
+      {% block stylesheets %}
+        {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+          <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+      {% endblock %}
+      <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  </head>
+  <body>
 
-        {% block stylesheets %}
-            {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-        {% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="{{ path('homepage') }}">Peigne & Ciseaux</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="form-inline my-2 my-lg-0">
+          {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+          <a href="{{ path('fos_user_security_logout') }}" class="btn btn-outline-danger"> Se déconnecter</a>
+          {% else %}
+          <div class="col-md-6">
+            <a href="{{ path('fos_user_security_login') }}" class="btn btn-outline-success">Se connecter</a>
+          </div>
+          <div class="col-md-6">
+            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-outline-danger">S'inscrire</a>
+          </div>
+          {% endif %} 
+        </div>
+      </div>
+    </nav>
 
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-            
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <div class="container">
-              <a class="navbar-brand" href="#">Peigne & ciseaux</a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+    {% block body %}{% endblock %}
 
-
-            </div>
-           </nav>
-
-        {% block body %}{% endblock %}
-
-        {% block javascripts %}
-            {% javascripts 
-              '@AppBundle/Resources/public/js/jquery-3.3.1.min.js'
-              '@AppBundle/Resources/public/js/bootstrap.min.js'
-              '@AppBundle/Resources/public/js/bootstrap.bundle.min.js'
-            %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-    </body>
+    {% block javascripts %}
+      {% javascripts 
+        '@AppBundle/Resources/public/js/jquery-3.3.1.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.bundle.min.js' 
+      %}
+        <script src="{{ asset_url }}"></script>
+      {% endjavascripts %}
+    {% endblock %}
+  </body>
 </html>
