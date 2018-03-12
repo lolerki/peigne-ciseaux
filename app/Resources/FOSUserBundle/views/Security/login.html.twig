@@ -2,6 +2,9 @@
 
 {% block body %}
 <div class="container">
+    <div class="text-right">
+        <a href="" class="btn btn-warning">Pas encore inscrit ?</a>
+    </div>
     <form action="{{ path('fos_user_security_check') }}" method="post" role="form" data-async data-target="#rating-modal" class="form-horizontal">
         <div class="modal-body">
             {% if error %}
@@ -13,10 +16,10 @@
             {% endif %}
             <div id="erreur" class="text-center panel panel-danger erreur hidden"></div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-            <div class="form-group ">
-                <label class="control-label col-sm-3" for="email">Pseudo :</label>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Entreprise :</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control verifiChampsVide" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="adresse@email.com">
+                    <input type="text" class="form-control verifiChampsVide" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Nom de l'entreprise">
                 </div> 
             </div>
 
