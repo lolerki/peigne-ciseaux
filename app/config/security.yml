@@ -4,6 +4,7 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
+        ROLE_MODO:        ROLE_MODO
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
@@ -14,7 +15,10 @@ security:
         main:
             pattern: ^/
             form_login:
+                default_target_path : /connexion
                 provider: fos_userbundle
+                success_handler: peigneciseaux.security.authentication_handler
+                failure_handler: peigneciseaux.security.authentication_handler
                 csrf_token_generator: security.csrf.token_manager
 
             logout:       true

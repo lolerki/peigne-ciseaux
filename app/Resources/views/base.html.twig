@@ -30,6 +30,26 @@
 
     {% block body %}{% endblock %}
 
+        <!-- Modal connexion-->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Connexion </h4>
+                </div>
+                <div id="ajax-loading"><img src="{{ asset('bundles/app/images/ajax-loader.gif') }}" class="img-responsive img-center" alt='chargement'></div>
+                <div id="formulaireAjax"></div>
+
+                <div class="modal-footer">
+                    <span id="fakeSubmitBtn" class="btn btn-primary disabled">Connexion</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% block javascripts %}
       {% javascripts 
         '@AppBundle/Resources/public/js/jquery-3.3.1.min.js'
@@ -38,6 +58,76 @@
       %}
         <script src="{{ asset_url }}"></script>
       {% endjavascripts %}
+
+        <script>
+            $("body").on("click", "#fakeSubmitBtn", function (e) {
+                $("#fakeSubmitBtn").addClass("hidden");
+                $("#_submit").trigger("click");
+            });
+            /**
+             * chargement du formulaire de connexion
+             */
+            $('#connexion').click(function () {
+                $.ajax({
+                    url: "{{ path('fos_user_security_login') }}",
+                    type: 'POST',
+                    success: function (jsonData) {
+                        if (jsonData) {
+                            $('#ajax-loading').hide();
+                            $("#formulaireAjax").html(jsonData).show('slow');
+                        }
+                        else {
+                            /*$("#textAlerte").text(jsonData.message);*/
+                        }
+                    }
+                });
+
+                $("#myModal").modal();
+                return false;
+            });
+
+            /**
+             * retour ajax sur le LoginListener
+             */
+            $("body").on("submit", "#formulaireAjax form", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "{{ path('fos_user_security_check') }}",
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (connexion) {
+                        
+                        if (connexion.success) {
+                            var route = connexion.route;
+                            var url = "{{ path('homepage') }}";
+                                    url = url.replace("homepage", route);
+                            window.location = url;
+                        }
+                        else {
+                            $("#erreur").removeClass('hidden');
+                            $("#erreur").html(connexion.message).show('slow');
+                            $("#fakeSubmitBtn").removeClass("hidden");
+                        }
+                    }
+                });
+                return false;
+            });
+
+            /**
+             * vérifie les champs du formulaire
+             */
+            $("body").on("keyup", ".verifiChampsVide", function (e) {
+
+                if ($("#username").val() && $("#password").val().length > 4) {
+                    $("#fakeSubmitBtn").removeClass("disabled");
+                }
+                else {
+                    $("#fakeSubmitBtn").addClass("disabled");
+                }
+            });
+
+        </script>
+      
     {% endblock %}
   </body>
 </html>
