@@ -1,16 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container">
-		{{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-		        <div class="form-group">
-                    {{ form_label(form.recherche, null, {'label_attr': {'class': 'control-label col-sm-3'}}) }}
-                    <div class="col-sm-9">
-                        {{ form_widget(form.recherche, { 'attr': {'class': 'form-control'}}) }}
-                    </div> {{ form_errors(form.recherche) }}
+    <div class="container">
+        <section id="top">
+            
+        {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+        <div class="form-group row">
+            {{ form_label(form.recherche, null, {'label_attr': {'class': 'col-sm-2 col-form-label col-form-label-lg'}}) }}
+            <div class="input-group col-sm-10">
+                {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default'}}) }}</div>
                 </div>
-                
-                {{ form_rest(form) }}
+            </div>
+            {{ form_errors(form.recherche) }}
+        </div>
+        {{ form_rest(form) }}
         {{ form_end(form) }}
-	</div>
+        
+        </section>
+        
+        <section class="">
+            
+           Besoin d'un site ? 
+           
+        </section>
+    </div>
 {% endblock %}

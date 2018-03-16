@@ -1,133 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Peigne & Ciseaux{% endblock %}</title>
-      {% block stylesheets %}
-        {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-          <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-      {% endblock %}
-      <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-  </head>
-  <body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Peigne & Ciseaux {% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="{{ path('homepage') }}">Peigne & Ciseaux</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="form-inline my-2 my-lg-0">
-          {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-          <a href="{{ path('fos_user_security_logout') }}" class="btn btn-outline-danger">Déconnexion</a>
-          {% else %}
-            <a href="{{ path('fos_user_security_login') }}" class="btn btn-outline-success">Se connecter</a>
-          {% endif %}
-        </div>
-      </div>
-    </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('homepage') }}">Peigne & Ciseaux</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="form-inline my-2 my-lg-0">
+                    {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                        <a href="{{ path('fos_user_security_logout') }}" class="btn btn-outline-danger">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}" class="btn btn-outline-success">Se connecter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
 
     {% block body %}{% endblock %}
 
-        <!-- Modal connexion-->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Connexion </h4>
-                </div>
-                <div id="ajax-loading"><img src="{{ asset('bundles/app/images/ajax-loader.gif') }}" class="img-responsive img-center" alt='chargement'></div>
-                <div id="formulaireAjax"></div>
-
-                <div class="modal-footer">
-                    <span id="fakeSubmitBtn" class="btn btn-primary disabled">Connexion</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
     {% block javascripts %}
-      {% javascripts 
+        {% javascripts 
         '@AppBundle/Resources/public/js/jquery-3.3.1.min.js'
         '@AppBundle/Resources/public/js/bootstrap.min.js'
         '@AppBundle/Resources/public/js/bootstrap.bundle.min.js' 
-      %}
+        %}
         <script src="{{ asset_url }}"></script>
-      {% endjavascripts %}
-
+        {% endjavascripts %}
         <script>
-            $("body").on("click", "#fakeSubmitBtn", function (e) {
-                $("#fakeSubmitBtn").addClass("hidden");
-                $("#_submit").trigger("click");
-            });
             /**
-             * chargement du formulaire de connexion
+             * chargement du formulaire d'insciption
              */
-            $('#connexion').click(function () {
+            $("body").on("click", "#inscription-tab", function (e) {
                 $.ajax({
-                    url: "{{ path('fos_user_security_login') }}",
+                    url: "{{ path('fos_user_registration_register') }}",
                     type: 'POST',
                     success: function (jsonData) {
                         if (jsonData) {
                             $('#ajax-loading').hide();
-                            $("#formulaireAjax").html(jsonData).show('slow');
-                        }
-                        else {
-                            /*$("#textAlerte").text(jsonData.message);*/
+                            $("#formInscription").html(jsonData).show('slow');
                         }
                     }
                 });
-
-                $("#myModal").modal();
-                return false;
             });
-
-            /**
-             * retour ajax sur le LoginListener
-             */
-            $("body").on("submit", "#formulaireAjax form", function (e) {
-                e.preventDefault();
-                $.ajax({
-                    url: "{{ path('fos_user_security_check') }}",
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function (connexion) {
-                        
-                        if (connexion.success) {
-                            var route = connexion.route;
-                            var url = "{{ path('homepage') }}";
-                                    url = url.replace("homepage", route);
-                            window.location = url;
-                        }
-                        else {
-                            $("#erreur").removeClass('hidden');
-                            $("#erreur").html(connexion.message).show('slow');
-                            $("#fakeSubmitBtn").removeClass("hidden");
-                        }
-                    }
-                });
-                return false;
-            });
-
-            /**
-             * vérifie les champs du formulaire
-             */
-            $("body").on("keyup", ".verifiChampsVide", function (e) {
-
-                if ($("#username").val() && $("#password").val().length > 4) {
-                    $("#fakeSubmitBtn").removeClass("disabled");
-                }
-                else {
-                    $("#fakeSubmitBtn").addClass("disabled");
-                }
-            });
-
         </script>
-      
     {% endblock %}
-  </body>
+</body>
 </html>
