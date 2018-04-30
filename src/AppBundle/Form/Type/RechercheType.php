@@ -21,7 +21,7 @@ class RechercheType extends AbstractType {
                 ))
                 ->add('subRecherche', SubmitType::class, array(
                     'label' => 'Recherche',
-                ));
+        ));
     }
 
     /**

@@ -2,28 +2,36 @@
 
 {% block body %}
     <div class="container">
-        <section id="top">
-            
-        {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-        <div class="form-group row">
-            {{ form_label(form.recherche, null, {'label_attr': {'class': 'col-sm-2 col-form-label col-form-label-lg'}}) }}
-            <div class="input-group col-sm-10">
-                {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                <div class="input-group-prepend">
-                    <div class="input-group-text"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default'}}) }}</div>
+        <section>
+            {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+            <div class="form-group row">
+                {{ form_label(form.recherche, null, {'label_attr': {'class': 'col-sm-2 col-form-label col-form-label-lg'}}) }}
+                <div class="input-group col-sm-10">
+                    {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default'}}) }}</div>
+                    </div>
                 </div>
+                {{ form_errors(form.recherche) }}
             </div>
-            {{ form_errors(form.recherche) }}
-        </div>
-        {{ form_rest(form) }}
-        {{ form_end(form) }}
-        
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
         </section>
-        
+
         <section class="">
-            
-           Besoin d'un site ? 
-           
+            <p>Les dernières annonces :</p>
+
+            {% for annonce in annonces %}
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../images/coiffeur.jpg" alt="{{ annonce.idUser.username }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ annonce.idUser.username }}</h5>
+                        <p class="card-text">{{ annonce.message }}</p>
+                        <a href="#" class="btn btn-primary">Voir plus</a>
+                    </div>
+                </div>
+            {% endfor %}
+
         </section>
     </div>
 {% endblock %}

@@ -19,7 +19,6 @@ class DefaultController extends Controller
         $rechercheForm = $this->createForm(RechercheType::class);
         $rechercheForm->handleRequest($request);
 
-
    //     if ($form->isSubmitted() && $form->isValid()) {
         // $form->getData() holds the submitted values
         // but, the original `$task` variable has also been updated
@@ -33,9 +32,14 @@ class DefaultController extends Controller
 
    //     return $this->redirectToRoute('task_success');
   //  }
+        
+        
+        $annonces = $this->getDoctrine()->getRepository('AppBundle:Annonce')->findAll();
+        
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
+            'annonces' => $annonces,
             'form' => $rechercheForm->createView(),
         ]);
     }
