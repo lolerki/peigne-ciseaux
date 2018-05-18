@@ -24,9 +24,9 @@
                         <div id="erreur" class="text-center panel panel-danger erreur hidden"></div>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="email">Entreprise :</label>
+                            <label class="control-label col-sm-3" for="email">E-mail :</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control verifiChampsVide" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Nom de l'entreprise">
+                                <input type="email" class="form-control verifiChampsVide" id="username" name="_username" value="{{ last_username }}" placeholder="Votre adresse mail" required="true">
                             </div>
                         </div>
 
