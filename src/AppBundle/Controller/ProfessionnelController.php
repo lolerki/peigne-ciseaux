@@ -6,16 +6,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class CommandesController extends Controller
+class ProfessionnelController extends Controller
 {
     /**
-     * @Route("/commandes", name="commandes")
+     * @Route("/professionnel", name="professionnel")
      */
     public function indexAction(Request $request)
     {
         
         // replace this example code with whatever you need
-        return $this->render('@App/commande/commandes.html.twig', [
+        return $this->render('@App/professionnel/professionnel.html.twig', [
         ]);
     }
 }
