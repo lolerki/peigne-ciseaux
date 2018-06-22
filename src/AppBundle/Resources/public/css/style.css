@@ -10,3 +10,28 @@
 .jumbotron{
     background-image: url("../images/hair-male.jpg") !important;
 }
+
+.title-white{
+    color: #FFFFFF;
+}
+
+.nav-pills .nav-link.active{
+    background-color: #000;
+}
+
+.BColorLink{
+    color: #000;
+}
+
+.navbar{
+    margin-bottom: 1%;
+}
+
+.colorBtn{
+    background-color: black;
+    color: white;
+}
+
+.formCenter{
+    margin: auto;
+}

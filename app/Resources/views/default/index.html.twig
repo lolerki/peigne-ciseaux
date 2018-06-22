@@ -2,20 +2,44 @@
 
 {% block body %}
     <div class="container">
-        <section>
-            {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-            <div class="form-group row">
-                {{ form_label(form.recherche, null, {'label_attr': {'class': 'col-sm-2 col-form-label col-form-label-lg'}}) }}
-                <div class="input-group col-sm-10">
-                    {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default'}}) }}</div>
+        {#        <section>
+                    {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+                    <div class="form-group row">
+                        {{ form_label(form.recherche, null, {'label_attr': {'class': 'col-sm-2 col-form-label col-form-label-lg'}}) }}
+                        <div class="input-group col-sm-10">
+                            {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default'}}) }}</div>
+                            </div>
+                        </div>
+                        {{ form_errors(form.recherche) }}
+                    </div>
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                </section>#}
+
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="title-white">Trouver le coiffeur qui vous convient !</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="formCenter">
+                            {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+                            <div class="form-group row">
+                                <div class="input-group col-sm-10">
+                                    {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text colorBtn"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}</div>
+                                    </div>
+                                </div>
+                                {{ form_errors(form.recherche) }}
+                            </div>
+                            {{ form_rest(form) }}
+                            {{ form_end(form) }}
+                        </div>
                     </div>
                 </div>
-                {{ form_errors(form.recherche) }}
             </div>
-            {{ form_rest(form) }}
-            {{ form_end(form) }}
         </section>
 
         <section class="">

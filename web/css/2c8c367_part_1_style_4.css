@@ -8,5 +8,13 @@
 }
 
 .jumbotron{
-    background-image: url("../../bundles/app/images/hair-male.jpg");
+    background-image: url("../../bundles/app/images/hair-male.jpg") !important;
+}
+
+.title-white{
+    color: #FFFFFF;
+}
+
+.nav-pills .nav-link.active{
+    background-color: #000 !important;
 }
