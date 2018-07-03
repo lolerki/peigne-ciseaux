@@ -18,13 +18,35 @@ class GestionController extends Controller {
         $carteForm = $this->createForm(CarteType::class);
         $carteForm->handleRequest($request);
 
+        //     if ($carteForm->isSubmitted() && $carteForm->isValid()) {
+        // $carteForm->getData() holds the submitted values
+        // but, the original `$task` variable has also been updated
+        //    $task = $carteForm->getData();
+        // ... perform some action, such as saving the task to the database
+        // for example, if Task is a Doctrine entity, save it!
+        // $em = $this->getDoctrine()->getManager();
+        // $em->persist($task);
+        // $em->flush();
+        //     return $this->redirectToRoute('task_success');
+        //  }
+
         $infoForm = $this->createForm(InformationsType::class);
         $infoForm->handleRequest($request);
 
-        // replace this example code with whatever you need
+        if ($infoForm->isSubmitted() && $infoForm->isValid()) {
+
+            $task = $infoForm->getData();
+
+            var_dump($task);
+            //$em = $this->getDoctrine()->getManager();
+            // $em->persist($task);
+            // $em->flush();
+            //     return $this->redirectToRoute('task_success');
+        }
+
         return $this->render('@App/gestion/gestion.html.twig', [
-            'form' => $carteForm->createView(),
-            'formInfo' => $infoForm->createView()
+                    'form' => $carteForm->createView(),
+                    'formInfo' => $infoForm->createView()
         ]);
     }
 

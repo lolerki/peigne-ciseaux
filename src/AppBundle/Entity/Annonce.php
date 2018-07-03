@@ -46,9 +46,9 @@ class Annonce
     private $idOptions;
 
     /**
-     * @var \AppBundle\Entity\Utilisateurs
+     * @var \AppBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Utilisateurs")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })
@@ -142,11 +142,11 @@ class Annonce
     /**
      * Set idUser
      *
-     * @param \AppBundle\Entity\Utilisateurs $idUser
+     * @param \AppBundle\Entity\User $idUser
      *
      * @return Annonce
      */
-    public function setIdUser(\AppBundle\Entity\Utilisateurs $idUser = null)
+    public function setIdUser(\AppBundle\Entity\User $idUser = null)
     {
         $this->idUser = $idUser;
 
@@ -156,7 +156,7 @@ class Annonce
     /**
      * Get idUser
      *
-     * @return \AppBundle\Entity\Utilisateurs
+     * @return \AppBundle\Entity\User
      */
     public function getIdUser()
     {
