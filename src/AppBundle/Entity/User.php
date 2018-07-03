@@ -45,6 +45,13 @@ class User extends BaseUser {
      * @ORM\Column(name="bio", type="string", length=255, nullable=true)
      */
     private $bio;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="birthday", type="date", nullable=true)
+     */
+    private $birthday;
 
     public function __construct() {
         parent::__construct();
@@ -142,5 +149,29 @@ class User extends BaseUser {
     public function getBio()
     {
         return $this->bio;
+    }
+
+    /**
+     * Set birthday
+     *
+     * @param \DateTime $birthday
+     *
+     * @return User
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    /**
+     * Get birthday
+     *
+     * @return \DateTime
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
     }
 }
