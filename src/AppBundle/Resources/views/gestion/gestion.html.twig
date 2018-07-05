@@ -19,29 +19,29 @@
                             <div class="formCenter">
                                 {{ form_start(formInfo, {'method': 'POST',  'attr': {'id': 'FormInfo', 'role': 'form', 'class' : 'form-horizontal' }}) }}
                                 <div class="form-group">
-                                    {{ form_label(formInfo.photo) }}
-                                    {{ form_widget(formInfo.photo, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                                    {{ form_label(formInfo.avatar) }}
+                                    {{ form_widget(formInfo.avatar, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                                 </div>
                                 <div class="form-group">
-                                    {{ form_label(formInfo.nom) }}
-                                    {{ form_widget(formInfo.nom, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                                    {{ form_label(formInfo.lastName) }}
+                                    {{ form_widget(formInfo.lastName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                                 </div>
-                                {{ form_errors(formInfo.nom) }}
+                                {{ form_errors(formInfo.lastName) }}
                                 <div class="form-group">
-                                    {{ form_label(formInfo.prenom) }}
-                                    {{ form_widget(formInfo.prenom, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                                    {{ form_label(formInfo.firstName) }}
+                                    {{ form_widget(formInfo.firstName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                                 </div>
-                                {{ form_errors(formInfo.prenom) }}
+                                {{ form_errors(formInfo.firstName) }}
                                 <div class="form-group">
-                                    {{ form_label(formInfo.daten) }}
-                                    {{ form_widget(formInfo.daten, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
+                                    {{ form_label(formInfo.birthday) }}
+                                    {{ form_widget(formInfo.birthday, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
                                 </div>
-                                {{ form_errors(formInfo.daten) }}
+                                {{ form_errors(formInfo.birthday) }}
                                 <div class="form-group">
-                                    {{ form_label(formInfo.description) }}
-                                    {{ form_widget(formInfo.description, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                                    {{ form_label(formInfo.bio) }}
+                                    {{ form_widget(formInfo.bio, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                                 </div>
-                                {{ form_errors(formInfo.description) }}
+                                {{ form_errors(formInfo.bio) }}
                                 <div class="form-group">
                                     {{ form_widget(formInfo.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
                                 </div>
