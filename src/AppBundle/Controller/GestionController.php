@@ -26,35 +26,31 @@ class GestionController extends Controller {
 
         if ($infoForm->isSubmitted() && $infoForm->isValid()) {
 
-           
-           $data = $infoForm->getData();
+             $data = $infoForm->getData();
 
-//           dump($this->getUser()->getId());
+             $file = $user->getAvatar();
+             $fileName = $fileUploader->upload($file);
 
-       //    dump($data->getLastName(),$data->getFirstName(), $data->getAvatar()->getClientOriginalName());die;
+             $em = $this->getDoctrine()->getManager();
 
-           $file = $user->getAvatar();
-           $fileName = $fileUploader->upload($file);
+                //on recupére notre objet user
+             $user = $this->getUser();
+                //on le modifie
+             $user->setAvatar($fileName);
+             $user->setFirstName($data->getFirstName());
+             $user->setLastName($data->getLastName());
+             $user->setBirthday($data->getBirthday());
+             $user->setBio($data->getBio());
+             $em->persist($user);
+             $em->flush();
 
+        }
 
-            $em = $this->getDoctrine()->getManager();
-
-            $user = $this->getUser();
-            $user->setAvatar($fileName);
-            $user->setFirstName($data->getFirstName());
-            $user->setLastName($data->getLastName());
-            $user->setBirthday($data->getBirthday());
-            $user->setBio($data->getBio());
-            $em->persist($user);
-            $em->flush();
-            // return $this->redirectToRoute('task_success');
-       }
-
-       return $this->render('@App/gestion/gestion.html.twig', [
+     return $this->render('@App/gestion/gestion.html.twig', [
         'form' => $carteForm->createView(),
         'formInfo' => $infoForm->createView()
     ]);
-   }
+ }
 
     /**
      * @return string
