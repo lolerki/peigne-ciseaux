@@ -20,9 +20,11 @@ class GestionController extends Controller {
         $carteForm = $this->createForm(CarteType::class);
         $carteForm->handleRequest($request);
 
-        $user = new User();
+         $user = $this->getUser();
         $infoForm = $this->createForm(InformationsType::class, $user);
         $infoForm->handleRequest($request);
+
+        $userInfo = $this->getUser();
 
         if ($infoForm->isSubmitted() && $infoForm->isValid()) {
 
@@ -33,13 +35,14 @@ class GestionController extends Controller {
 
              $em = $this->getDoctrine()->getManager();
 
-                //on recupére notre objet user
-             $user = $this->getUser();
-                //on le modifie
+            //on recupére notre objet user
+      //       $user = $this->getUser();
+            //on le modifie
              $user->setAvatar($fileName);
              $user->setFirstName($data->getFirstName());
              $user->setLastName($data->getLastName());
              $user->setBirthday($data->getBirthday());
+             dump($data->getBirthday());
              $user->setBio($data->getBio());
              $em->persist($user);
              $em->flush();

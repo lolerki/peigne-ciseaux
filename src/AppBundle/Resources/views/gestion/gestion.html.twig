@@ -1,214 +1,222 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="bd-example bd-example-tabs">
-            <div class="row">
-                <div class="col-3">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link BColorLink active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Mes informations</a>
-                        <a class="nav-link BColorLink" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Ma carte</a>
-                        <a class="nav-link BColorLink" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="true">Mes prestations</a>
-                        <a class="nav-link BColorLink" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mes factures</a>
+<div class="container">
+    <div class="bd-example bd-example-tabs">
+        <div class="row">
+            <div class="col-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link BColorLink" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Ma carte</a>
+                    <a class="nav-link BColorLink" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="true">Mes rendez-vous</a>
+                    <a class="nav-link BColorLink active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Mes informations</a>
+                    <a class="nav-link BColorLink" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mes factures</a>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+                       <h2>Mes informations</h2>
+
+                       <div class="formCenter">
+                        {{ form_start(formInfo, {'method': 'POST',  'attr': {'id': 'FormInfo', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+                        <div class="form-group row">
+
+                            <div class="col-sm-1">
+                                {{ form_label(formInfo.avatar) }}
+                            </div>
+
+                            <img src="{{ asset('uploads/images/39d4bd3e7fe53ab925a83cf730cfb326.jpeg')}}" class="avatar col-sm-2 " >
+
+                            {{ form_widget(formInfo.avatar, { 'attr': {'class': 'form-control form-control-sm col-sm-6'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(formInfo.lastName) }}
+                            {{ form_widget(formInfo.lastName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                        </div>
+                        {{ form_errors(formInfo.lastName) }}
+                        <div class="form-group">
+                            {{ form_label(formInfo.firstName) }}
+                            {{ form_widget(formInfo.firstName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                        </div>
+                        {{ form_errors(formInfo.firstName) }}
+                        <div class="form-group">
+                            {{ form_label(formInfo.birthday) }}
+                            {{ form_widget(formInfo.birthday, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
+                        </div>
+                        {{ form_errors(formInfo.birthday) }}
+                        <div class="form-group">
+                            {{ form_label(formInfo.bio) }}
+                            {{ form_widget(formInfo.bio, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                        </div>
+                        {{ form_errors(formInfo.bio) }}
+                        <div class="form-group">
+                            {{ form_widget(formInfo.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
+                        </div>
+
+                        {{ form_rest(formInfo) }}
+                        {{ form_end(formInfo) }}
                     </div>
                 </div>
-                <div class="col-9">
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                             <h2>Mes informations</h2>
-                            <div class="formCenter">
-                                {{ form_start(formInfo, {'method': 'POST',  'attr': {'id': 'FormInfo', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-                                <div class="form-group">
-                                    {{ form_label(formInfo.avatar) }}
-                                    {{ form_widget(formInfo.avatar, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                                </div>
-                                <div class="form-group">
-                                    {{ form_label(formInfo.lastName) }}
-                                    {{ form_widget(formInfo.lastName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                                </div>
-                                {{ form_errors(formInfo.lastName) }}
-                                <div class="form-group">
-                                    {{ form_label(formInfo.firstName) }}
-                                    {{ form_widget(formInfo.firstName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                                </div>
-                                {{ form_errors(formInfo.firstName) }}
-                                <div class="form-group">
-                                    {{ form_label(formInfo.birthday) }}
-                                    {{ form_widget(formInfo.birthday, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
-                                </div>
-                                {{ form_errors(formInfo.birthday) }}
-                                <div class="form-group">
-                                    {{ form_label(formInfo.bio) }}
-                                    {{ form_widget(formInfo.bio, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                                </div>
-                                {{ form_errors(formInfo.bio) }}
-                                <div class="form-group">
-                                    {{ form_widget(formInfo.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
-                                </div>
-
-                                {{ form_rest(formInfo) }}
-                                {{ form_end(formInfo) }}
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                            <div class="alert alert-info" role="alert">
-                                Merci de mettre à jour vos informations personnelle avant de rédiger votre annonce
-                            </div>
-
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus-circle"></i> Ajouter un élément à la carte</button>
-                             <h2>Mes annonces</h2>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Titre</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Prix</th>
-                                        <th scope="col">Actif</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                            <h2>Mes prestations</h2>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Client</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Prix</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Num&ro</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                            <h2>Mes factures</h2>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Titre</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Tarif</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="alert alert-info" role="alert">
+                        Merci de mettre à jour vos informations personnelle avant de rédiger votre annonce
                     </div>
+
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus-circle"></i> Ajouter un élément à la carte</button>
+                    <h2>Mes annonces</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">Actif</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <h2>Mes prestations</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Client</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Num&ro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <h2>Mes factures</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Tarif</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 
 
-    <!-- Modal Ajouter un élément -->
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un élément a la carte</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="formCenter">
-                        {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormAnnonce', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-                        <div class="form-group">
-                            {{ form_label(form.titre) }}
-                            {{ form_widget(form.titre, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.type) }}
-                            {{ form_widget(form.type, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(form.prix) }}
-                            {{ form_widget(form.prix, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_widget(form.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
-                        </div>
-
-                        {#  {{ form_errors(form.description) }}#}
-
-                        {{ form_rest(form) }}
-                        {{ form_end(form) }}
+<!-- Modal Ajouter un élément -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un élément a la carte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="formCenter">
+                    {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormAnnonce', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+                    <div class="form-group">
+                        {{ form_label(form.titre) }}
+                        {{ form_widget(form.titre, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                     </div>
+                    <div class="form-group">
+                        {{ form_label(form.type) }}
+                        {{ form_widget(form.type, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.prix) }}
+                        {{ form_widget(form.prix, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
+                    </div>
+
+                    {#  {{ form_errors(form.description) }}#}
+
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary">Ajouter à la carte</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Ajouter à la carte</button>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

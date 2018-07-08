@@ -23,7 +23,7 @@
                     {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-user-circle"></i>  {{ app.user.username }}
+                              <img src="{{ asset('uploads/images/39d4bd3e7fe53ab925a83cf730cfb326.jpeg')}}" id="avatarNavBar"> Bonjour {{ app.user.firstname }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 {% if is_granted('ROLE_ADMIN') %}

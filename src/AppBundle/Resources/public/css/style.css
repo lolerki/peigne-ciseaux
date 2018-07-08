@@ -35,3 +35,15 @@
 .formCenter{
     margin: auto;
 }
+
+#avatarNavBar{
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.avatar{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
