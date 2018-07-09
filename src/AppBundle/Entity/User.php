@@ -36,6 +36,34 @@ class User extends BaseUser {
     /**
      * @var string
      *
+     * @ORM\Column(name="phone_number", type="string", length=20, nullable=true)
+     */
+    private $phoneNumber;
+
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="street", type="string", length=150, nullable=true)
+     */
+    private $street;
+
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=30, nullable=true)
+     */
+    private $city;
+
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="zip_code", type="integer", length=5, nullable=true)
+     */
+    private $zipCode;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="Ajouter une image jpg")
      * @Assert\File(mimeTypes={ "image/jpeg" })
@@ -176,5 +204,101 @@ class User extends BaseUser {
     public function getBirthday()
     {
         return $this->birthday;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     *
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Set street
+     *
+     * @param string $street
+     *
+     * @return User
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set zipCode
+     *
+     * @param \number $zipCode
+     *
+     * @return User
+     */
+    public function setZipCode(\number $zipCode)
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    /**
+     * Get zipCode
+     *
+     * @return \number
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
     }
 }

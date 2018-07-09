@@ -1,20 +1,118 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="col-md-12">
-            <div class="col-md-3">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Adresse</a>
-                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Modifier mon mot de passe</a>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">test</div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">test</div>
-                </div>
-            </div>
+
+<div class="container">
+    <div class="col-md-12">
+        {{ form_start(formInfoClient, {'attr': {'id': 'formInfoClient', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+
+        <div class="form-group">
+            {{ form_label(formInfoClient.lastName) }}
+            {{ form_widget(formInfoClient.lastName, { 'attr': {'id': 'lastname', 'class': 'form-control form-control-sm col-sm-9'}}) }}
         </div>
+        {{ form_errors(formInfoClient.lastName) }}
+        <div class="form-group">
+            {{ form_label(formInfoClient.firstName) }}
+            {{ form_widget(formInfoClient.firstName, { 'attr': {'id': 'firstname', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.firstName) }}
+        <div class="form-group">
+            {{ form_label(formInfoClient.phonenumber) }}
+            {{ form_widget(formInfoClient.phonenumber, { 'attr': {'id': 'phone', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.phonenumber) }}
+
+        <div class="form-group">
+            {{ form_label(formInfoClient.street) }}
+            {{ form_widget(formInfoClient.street, { 'attr': {'id': 'autocomplete', 'onfocus': 'geolocate()', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.street) }}
+
+        <div class="form-group">
+            {{ form_label(formInfoClient.city) }}
+            {{ form_widget(formInfoClient.city, { 'attr': {'id': 'street_number', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.city) }}
+        <div class="form-group">
+            {{ form_label(formInfoClient.zipcode) }}
+            {{ form_widget(formInfoClient.zipcode, { 'attr': {'id': 'postal_code', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.zipcode) }}
+
+        {{ form_rest(formInfoClient) }}
+        {{ form_end(formInfoClient) }}
+
     </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+
+  var placeSearch, autocomplete;
+  var componentForm = {
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'short_name',
+    country: 'long_name',
+    postal_code: 'short_name'
+};
+
+function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+          document.getElementById(component).value = '';
+          document.getElementById(component).disabled = false;
+      }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+        }
+    }
+}
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+  function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+          });
+          autocomplete.setBounds(circle.getBounds());
+      });
+      }
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCf2UUR8qjDm7biR_GFaUfAlb_4OmXZ9MA&libraries=places&callback=initAutocomplete"
+async defer></script>
 {% endblock %}

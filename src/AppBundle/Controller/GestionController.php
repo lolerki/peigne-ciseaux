@@ -17,14 +17,14 @@ class GestionController extends Controller {
     */
     public function indexAction(Request $request, FileUploader $fileUploader) {
 
+        $infoFormSuccess = false;
+
         $carteForm = $this->createForm(CarteType::class);
         $carteForm->handleRequest($request);
 
-         $user = $this->getUser();
+        $user = $this->getUser();
         $infoForm = $this->createForm(InformationsType::class, $user);
         $infoForm->handleRequest($request);
-
-        $userInfo = $this->getUser();
 
         if ($infoForm->isSubmitted() && $infoForm->isValid()) {
 
@@ -36,7 +36,6 @@ class GestionController extends Controller {
              $em = $this->getDoctrine()->getManager();
 
             //on recupére notre objet user
-      //       $user = $this->getUser();
             //on le modifie
              $user->setAvatar($fileName);
              $user->setFirstName($data->getFirstName());
@@ -47,9 +46,12 @@ class GestionController extends Controller {
              $em->persist($user);
              $em->flush();
 
+             $infoFormSuccess = true;
+
         }
 
      return $this->render('@App/gestion/gestion.html.twig', [
+        'infoFormSuccess' => $infoFormSuccess,
         'form' => $carteForm->createView(),
         'formInfo' => $infoForm->createView()
     ]);

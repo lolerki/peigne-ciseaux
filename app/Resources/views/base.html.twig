@@ -23,8 +23,9 @@
                     {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <img src="{{ asset('uploads/images/39d4bd3e7fe53ab925a83cf730cfb326.jpeg')}}" id="avatarNavBar"> Bonjour {{ app.user.firstname }}
+                              <img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" id="avatarNavBar"> Bonjour {{ app.user.firstname }}
                             </button>
+
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('admin') }}" class="dropdown-item"><i class="fas fa-wrench"></i> Administration</a>
