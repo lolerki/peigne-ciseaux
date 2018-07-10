@@ -5,10 +5,7 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Entity\User;
 
@@ -29,7 +26,7 @@ class InformationClientType extends AbstractType {
     		'label' => 'Prénom *',
     		'required' => true,
     	))
-    	->add('phonenumber', NumberType::class, array(
+    	->add('phonenumber', TextType::class, array(
     		'label' => 'Numéro *',
     		'required' => true,
     	))
@@ -41,7 +38,7 @@ class InformationClientType extends AbstractType {
     		'label' => 'Ville *',
     		'required' => true,
     	))
-    	->add('zipcode', NumberType::class, array(
+    	->add('zipcode', TextType::class, array(
     		'label' => 'Code postal *',
     		'required' => true,
     	))

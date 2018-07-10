@@ -41,7 +41,6 @@ class GestionController extends Controller {
              $user->setFirstName($data->getFirstName());
              $user->setLastName($data->getLastName());
              $user->setBirthday($data->getBirthday());
-             dump($data->getBirthday());
              $user->setBio($data->getBio());
              $em->persist($user);
              $em->flush();

@@ -26,6 +26,21 @@ class InformationsController extends Controller
 
     		$data = $infoFormClient->getData();
 
+    		$em = $this->getDoctrine()->getManager();
+
+    		dymp($user);
+    		var_dump($user);
+
+    		$user->setFirstName($data->getFirstName());
+    		$user->setLastName($data->getLastName());
+    		$user->setPhoneNumber($data->getPhoneNumber());
+    		$user->setsetCity($data->getCity());
+    		$user->setsetStreet($data->getStreet());
+    		$user->setsetZipCode($data->getZipCode());
+    		
+    		$em->persist($user);
+    		$em->flush();
+
     	}
 
         // replace this example code with whatever you need
