@@ -45,16 +45,7 @@
         <section class="">
             <p>Les dernières annonces :</p>
 
-            {% for annonce in annonces %}
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="../images/coiffeur.jpg" alt="{{ annonce.idUser.username }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ annonce.idUser.username }}</h5>
-                        <p class="card-text">{{ annonce.message }}</p>
-                        <a href="#" class="btn btn-primary">Voir plus</a>
-                    </div>
-                </div>
-            {% endfor %}
+
 
         </section>
     </div>

@@ -18,13 +18,11 @@ class DefaultController extends Controller
         //formulaire recherche
         $rechercheForm = $this->createForm(RechercheType::class);
         $rechercheForm->handleRequest($request);
-        
-        $annonces = $this->getDoctrine()->getRepository('AppBundle:Annonce')->findAll();
+
         
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
-            'annonces' => $annonces,
             'form' => $rechercheForm->createView(),
         ]);
     }

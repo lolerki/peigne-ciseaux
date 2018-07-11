@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\CarteType;
 use AppBundle\Form\Type\InformationsType;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Card;
 use AppBundle\Service\FileUploader;
 
 class GestionController extends Controller {
@@ -19,6 +20,7 @@ class GestionController extends Controller {
 
         $infoFormSuccess = false;
 
+        $card = new Card;
         $carteForm = $this->createForm(CarteType::class);
         $carteForm->handleRequest($request);
 
@@ -46,6 +48,20 @@ class GestionController extends Controller {
              $em->flush();
 
              $infoFormSuccess = true;
+
+        }
+
+        if ($carteForm->isSubmitted() && $carteForm->isValid()) {
+
+             $data = $carteForm->getData();
+
+             $em = $this->getDoctrine()->getManager();
+
+             $card->setName($data['titre']);
+             $card->setCategory($data['type']);
+             $card->setPrice($data['prix']);
+             $em->persist($card);
+             $em->flush();
 
         }
 

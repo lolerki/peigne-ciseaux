@@ -18,10 +18,16 @@ class CarteType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('type', ChoiceType::class, array(
+                    'choices'  => array(
+                        'Homme' => 'homme',
+                        'Femme' => 'femme',
+                        'Enfant' => 'enfant',
+                    ),
                     'label' => 'Catégorie',
                     'required' => true,
                 ))
                 ->add('titre', TextType::class, array(
+
                     'label' => 'Nom',
                     'required' => true,
                 ))

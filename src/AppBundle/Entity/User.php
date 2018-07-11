@@ -65,8 +65,6 @@ class User extends BaseUser {
      * @var string
      *
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Ajouter une image jpg")
-     * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $avatar;
 

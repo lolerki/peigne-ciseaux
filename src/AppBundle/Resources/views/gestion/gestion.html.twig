@@ -65,9 +65,13 @@
                     </div>
                 </div>
                 <div class="tab-pane fade active show" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+                    {% if app.user.lastname is null %}
                     <div class="alert alert-info" role="alert">
-                        Merci de mettre à jour vos informations personnelle avant de rédiger votre annonce
+                        Merci de mettre à jour vos informations personnelle avant de créer votre carte.
                     </div>
+                     {% endif %}
+
 
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus-circle"></i> Ajouter un élément à la carte</button>
                     <h2>Ma carte</h2>
@@ -88,6 +92,7 @@
                                 <td>Prestation</td>
                                 <td>Prix</td>
                             </tr>
+
                             <tr>
                                 <td>jean</td>
                                 <td>pierre</td>
@@ -96,14 +101,7 @@
                                 <td>Ottho</td>
                                 <td>jj</td>
                             </tr>
-                            <tr>
-                                <td>Prestation</td>
-                                <td>Prix</td>
-                                <td>Mark</td>
-                                <td>coupe</td>
-                                <td>Otto</td>
-                                <td>coupe</td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>

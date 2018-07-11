@@ -16,9 +16,7 @@ class InformationsController extends Controller
     public function indexAction(Request $request)
     {
 
-
     	$user = $this->getUser();
-
 
     	$infoFormClient = $this->createForm(InformationClientType::class, $user);
     	$infoFormClient->handleRequest($request);
@@ -35,9 +33,9 @@ class InformationsController extends Controller
     		$user->setFirstName($data->getFirstName());
     		$user->setLastName($data->getLastName());
     		$user->setPhoneNumber($data->getPhoneNumber());
-    		$user->setsetCity($data->getCity());
-    		$user->setsetStreet($data->getStreet());
-    		$user->setsetZipCode($data->getZipCode());
+    		$user->setCity($data->getCity());
+    		$user->setStreet($data->getStreet());
+    		$user->setZipCode($data->getZipCode());
 
     		$em->persist($user);
     		$em->flush();
