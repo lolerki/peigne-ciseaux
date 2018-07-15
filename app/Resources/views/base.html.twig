@@ -36,8 +36,10 @@
                                {% if is_granted('ROLE_COIFFEUR') %}
                                 <a href="{{ path('gestion') }}" class="dropdown-item"><i class="fas fa-table"></i> Mon tableau de bord</a>
                                 {% endif %}
+                                {% if is_granted('ROLE_CLIENT') %}
                                 <a href="{{ path('informations') }}" class="dropdown-item"><i class="far fa-id-card"></i> Mes informations</a>
                                 <a href="{{ path('commandes') }}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Mes commandes</a>
+                                {% endif %}
                                 <a href="{{ path('fos_user_security_logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
                             </div>
                         </div>

@@ -15,7 +15,7 @@ class RegistrationType extends AbstractType
                 'choices' =>
                     array
                     (
-                        'Utilisateur' => 'ROLE_USER',
+                        'Utilisateur' => 'ROLE_CLIENT',
                         'Un coiffeur' => 'ROLE_COIFFEUR'
                           
                     ) ,

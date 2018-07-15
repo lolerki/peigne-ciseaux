@@ -16,11 +16,11 @@
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
-                    {% if infoFormSuccess == true %}
-                      <div class="alert alert-success" role="alert">
+                        {% if infoFormSuccess == true %}
+                        <div class="alert alert-success" role="alert">
                           Votre profil a été mise à jours avec succès !
                       </div>
-                    {% endif %}
+                      {% endif %}
 
                       <h2>Mes informations</h2>
 
@@ -31,9 +31,9 @@
                             <div class="col-sm-1">
                                 {{ form_label(formInfo.avatar) }}
                             </div>
-                             {% if(app.user.avatar) %}
+                            {% if(app.user.avatar) %}
                             <img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" class="avatar col-sm-2 " >
-                             {% endif %}
+                            {% endif %}
 
                             {{ form_widget(formInfo.avatar, { 'attr': {'class': 'form-control form-control-sm col-sm-6'}}) }}
                         </div>
@@ -71,38 +71,27 @@
                     <div class="alert alert-info" role="alert">
                         Merci de mettre à jour vos informations personnelle avant de créer votre carte.
                     </div>
-                     {% endif %}
+                    {% endif %}
 
 
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus-circle"></i> Ajouter un élément à la carte</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus-circle"></i> Ajouter un élément à la carte</button>
                     <h2>Ma carte</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th colspan="2">HOMME</th>
-                                <th colspan="2">FEMME</th>
-                                <th colspan="2">ENFANT</th>
+                                <th >Prestation</th>
+                                <th >Catégorie</th>
+                                <th >Prix</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for cards in card %}
                             <tr>
-                                <td>Prestation</td>
-                                <td>Prix</td>
-                                <td>Prestation</td>
-                                <td>Prix</td>
-                                <td>Prestation</td>
-                                <td>Prix</td>
+                                <td>{{ cards.name }}</td>
+                                <td>{{ cards.category }}</td>
+                                <td>{{ cards.price }}</td>
                             </tr>
-
-                            <tr>
-                                <td>jean</td>
-                                <td>pierre</td>
-                                <td>Mark</td>
-                                <td>huhd</td>
-                                <td>Ottho</td>
-                                <td>jj</td>
-                            </tr>
-
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

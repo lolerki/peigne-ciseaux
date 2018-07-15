@@ -19,12 +19,15 @@ class GestionController extends Controller {
     public function indexAction(Request $request, FileUploader $fileUploader) {
 
         $infoFormSuccess = false;
+        $user = $this->getUser();
+
+        $myCard = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId()));
+        dump($myCard);
 
         $card = new Card;
         $carteForm = $this->createForm(CarteType::class);
         $carteForm->handleRequest($request);
-
-        $user = $this->getUser();
+        
         $infoForm = $this->createForm(InformationsType::class, $user);
         $infoForm->handleRequest($request);
 
@@ -68,6 +71,7 @@ class GestionController extends Controller {
         }
 
      return $this->render('@App/gestion/gestion.html.twig', [
+        'card' => $myCard,
         'infoFormSuccess' => $infoFormSuccess,
         'form' => $carteForm->createView(),
         'formInfo' => $infoForm->createView()
