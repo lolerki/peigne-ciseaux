@@ -11,11 +11,13 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('roles', ChoiceType::class, array(
+                'label' => 'Je suis un :',
                 'choices' =>
                     array
                     (
-                            'ROLE_USER' => 'utilisateur',
-                            'ROLE_COIFFEUR' => 'Professionel'
+                        'Utilisateur' => 'ROLE_USER',
+                        'Un coiffeur' => 'ROLE_COIFFEUR'
+                          
                     ) ,
                 'multiple' => true,
                 'required' => true,

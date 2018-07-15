@@ -43,6 +43,12 @@ services:
         tags:
             - { name: form.type, alias: app_user_registration }
 
+    app_user.registration_listener:
+        class: UserBundle\EventListener\RegistrationListener
+        arguments: []
+        tags:
+            - { name: kernel.event_subscriber }
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
