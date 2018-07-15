@@ -23,16 +23,19 @@
                     {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" id="avatarNavBar"> Bonjour {{ app.user.firstname }}
+                                {% if(app.user.avatar) %}
+                                <img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" id="avatarNavBar">
+                                {% endif %}
+                               Bonjour {{ app.user.firstname }}
                             </button>
 
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('admin') }}" class="dropdown-item"><i class="fas fa-wrench"></i> Administration</a>
                                 {% endif %}
-{#                                {% if is_granted('ROLE_COIFFEUR') %}#}
+                               {% if is_granted('ROLE_COIFFEUR') %}
                                 <a href="{{ path('gestion') }}" class="dropdown-item"><i class="fas fa-table"></i> Mon tableau de bord</a>
-{#                                {% endif %}#}
+                                {% endif %}
                                 <a href="{{ path('informations') }}" class="dropdown-item"><i class="far fa-id-card"></i> Mes informations</a>
                                 <a href="{{ path('commandes') }}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Mes commandes</a>
                                 <a href="{{ path('fos_user_security_logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>

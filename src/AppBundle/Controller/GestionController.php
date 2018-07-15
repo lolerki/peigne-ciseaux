@@ -60,6 +60,8 @@ class GestionController extends Controller {
              $card->setName($data['titre']);
              $card->setCategory($data['type']);
              $card->setPrice($data['prix']);
+             $card->setIdUser($user);
+             
              $em->persist($card);
              $em->flush();
 
