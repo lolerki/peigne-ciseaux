@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{{ dump(card) }}
+
+<h2>Coiffeur</h2>
+
+{% for cards in card %}
+
+	Nom : {{ cards.idUser.lastName }}<br>
+	Prenom : {{ cards.idUser.firstName }}<br>
+	Coupe : {{ cards.name }}<br>
+	Categorie : {{ cards.category }}<br>
+	Prix : {{ cards.price }}<br>
+
+ {% endfor %}
+
+
+{% endblock %}

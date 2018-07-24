@@ -1,52 +1,78 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        {#        <section>
-                    {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-                    <div class="form-group row">
-                        {{ form_label(form.recherche, null, {'label_attr': {'class': 'col-sm-2 col-form-label col-form-label-lg'}}) }}
-                        <div class="input-group col-sm-10">
-                            {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default'}}) }}</div>
-                            </div>
-                        </div>
-                        {{ form_errors(form.recherche) }}
-                    </div>
-                    {{ form_rest(form) }}
-                    {{ form_end(form) }}
-                </section>#}
+<div class="container">
+    {#        <section>
+        {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+        <div class="form-group row">
+            {{ form_label(form.recherche, null, {'label_attr': {'class': 'col-sm-2 col-form-label col-form-label-lg'}}) }}
+            <div class="input-group col-sm-10">
+                {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                <div class="input-group-prepend">
+                    <div class="input-group-text"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default'}}) }}</div>
+                </div>
+            </div>
+            {{ form_errors(form.recherche) }}
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </section>#}
 
-        <section class="jumbotron text-center">
-            <div class="container">
-                <h1 class="title-white">Trouver le coiffeur qui vous convient !</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="formCenter">
-                            {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-                            <div class="form-group row">
-                                <div class="input-group col-sm-10">
-                                    {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text colorBtn"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}</div>
-                                    </div>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="title-white">Trouvez le coiffeur qui vous convient !</h1>
+            <div class="card">
+                <div class="card-body">
+                    <div class="formCenter">
+                        {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormRecherche', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+                        <div class="form-group row">
+                            <div class="input-group col-sm-10">
+                                {{ form_widget(form.recherche, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text colorBtn"> {{ form_widget(form.subRecherche, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}</div>
                                 </div>
-                                {{ form_errors(form.recherche) }}
                             </div>
-                            {{ form_rest(form) }}
-                            {{ form_end(form) }}
+                            {{ form_errors(form.recherche) }}
                         </div>
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="">
-            <p>Les dernières annonces :</p>
+    {% if search %}
+    <section>
+        <h2>Les coiffeurs disponible dans votre région :</h2>
+        <hr/>
 
+        <div class="card-group">
 
+            {% for searchs in search %}
+            <div class="card">
+                {%if searchs.avatar is not null %}
+                <img class="card-img-top" src="{{ asset('uploads/images/' ~ searchs.avatar ~ '')}}" alt="photo coiffeur {{ searchs.lastName }} {{ searchs.firstName }}" width="640" height="275">
+                {%else %}
 
-        </section>
-    </div>
+                <div class="text-center" style="margin-bottom:250px;">Pohto indisponible</div>
+
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ searchs.lastName }} {{ searchs.firstName }}</h5>
+                    <p class="card-text">
+                        {{ searchs.bio }}
+                    </p>
+                    <p class="card-text"><small class="text-muted">{{ searchs.city }}</small></p>
+
+                    <a href="{{ path('coiffeur', { 'id': searchs.id }) }}" class="btn btn-primary">Je commande</a>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
 {% endblock %}

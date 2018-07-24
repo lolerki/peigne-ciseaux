@@ -48,6 +48,11 @@
                         </div>
                         {{ form_errors(formInfo.firstName) }}
                         <div class="form-group">
+                            {{ form_label(formInfo.city) }}
+                            {{ form_widget(formInfo.city, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                        </div>
+                        {{ form_errors(formInfo.city) }}
+                        <div class="form-group">
                             {{ form_label(formInfo.birthday) }}
                             {{ form_widget(formInfo.birthday, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
                         </div>

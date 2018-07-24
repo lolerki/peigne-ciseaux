@@ -25,7 +25,7 @@ class InformationsType extends AbstractType {
 
         ->add('avatar', FileType::class, array(
             'label' => 'Photo',
-            'required' => true,
+            'required' => false,
         ))
 
         ->add('lastName', TextType::class, array(
@@ -35,6 +35,11 @@ class InformationsType extends AbstractType {
 
         ->add('firstName', TextType::class, array(
             'label' => 'Prénom *',
+            'required' => true,
+        ))
+
+        ->add('city', TextType::class, array(
+            'label' => 'Ville desservie *',
             'required' => true,
         ))
 

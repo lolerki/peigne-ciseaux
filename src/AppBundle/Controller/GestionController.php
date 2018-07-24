@@ -22,7 +22,7 @@ class GestionController extends Controller {
         $user = $this->getUser();
 
         $myCard = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId()));
-        dump($myCard);
+       // dump($myCard);
 
         $card = new Card;
         $carteForm = $this->createForm(CarteType::class);
@@ -33,42 +33,46 @@ class GestionController extends Controller {
 
         if ($infoForm->isSubmitted() && $infoForm->isValid()) {
 
-             $data = $infoForm->getData();
+         $data = $infoForm->getData();
 
-             $file = $user->getAvatar();
-             $fileName = $fileUploader->upload($file);
+         $file = $user->getAvatar();
+         $fileName = $fileUploader->upload($file);
 
-             $em = $this->getDoctrine()->getManager();
+
+
+         $em = $this->getDoctrine()->getManager();
 
             //on recupére notre objet user
             //on le modifie
-             $user->setAvatar($fileName);
-             $user->setFirstName($data->getFirstName());
-             $user->setLastName($data->getLastName());
-             $user->setBirthday($data->getBirthday());
-             $user->setBio($data->getBio());
-             $em->persist($user);
-             $em->flush();
+         $user->setAvatar($fileName);
+         $user->setFirstName($data->getFirstName());
+         $user->setLastName($data->getLastName());
+         $user->setCity($data->getCity());
+         $user->setBirthday($data->getBirthday());
+         $user->setBio($data->getBio());
+         
+         $em->persist($user);
+         $em->flush();
 
-             $infoFormSuccess = true;
+         $infoFormSuccess = true;
 
-        }
+     }
 
-        if ($carteForm->isSubmitted() && $carteForm->isValid()) {
+     if ($carteForm->isSubmitted() && $carteForm->isValid()) {
 
-             $data = $carteForm->getData();
+         $data = $carteForm->getData();
 
-             $em = $this->getDoctrine()->getManager();
+         $em = $this->getDoctrine()->getManager();
 
-             $card->setName($data['titre']);
-             $card->setCategory($data['type']);
-             $card->setPrice($data['prix']);
-             $card->setIdUser($user);
-             
-             $em->persist($card);
-             $em->flush();
+         $card->setName($data['titre']);
+         $card->setCategory($data['type']);
+         $card->setPrice($data['prix']);
+         $card->setIdUser($user);
 
-        }
+         $em->persist($card);
+         $em->flush();
+
+     }
 
      return $this->render('@App/gestion/gestion.html.twig', [
         'card' => $myCard,

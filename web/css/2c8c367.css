@@ -38,5 +38,34 @@
 }
 
 .nav-pills .nav-link.active{
-    background-color: #000 !important;
+    background-color: #000;
+}
+
+.BColorLink{
+    color: #000;
+}
+
+.navbar{
+    margin-bottom: 1%;
+}
+
+.colorBtn{
+    background-color: black;
+    color: white;
+}
+
+.formCenter{
+    margin: auto;
+}
+
+#avatarNavBar{
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.avatar{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
 }
