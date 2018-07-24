@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\RechercheType;
+use AppBundle\Entity\User;
 
 class DefaultController extends Controller
 {
@@ -14,7 +15,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $search = false;
+        $userByRoles = false;
         //formulaire recherche
         $rechercheForm = $this->createForm(RechercheType::class);
         $rechercheForm->handleRequest($request);
@@ -26,16 +27,15 @@ class DefaultController extends Controller
 
             $city = $data['recherche'];
 
-            $search = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('city' => $city));
+            $userByRoles = $this->getDoctrine()->getRepository(User::class)->findAllUserByRoles($city);
 
 
         }
 
-
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
-            'search' => $search,
             'form' => $rechercheForm->createView(),
+            'search' => $userByRoles,
         ]);
     }
 }

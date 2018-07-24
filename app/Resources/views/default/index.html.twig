@@ -44,35 +44,36 @@
 
     {% if search %}
     <section>
-        <h2>Les coiffeurs disponible dans votre région :</h2>
+        <h2>Les coiffeurs dans les alentours de Noisy le grand  :</h2>
         <hr/>
 
         <div class="card-deck">
 
             {% for searchs in search %}
-            <div class="card">
-                {%if searchs.avatar is not null %}
-                <img class="card-img-top" src="{{ asset('uploads/images/' ~ searchs.avatar ~ '')}}" alt="photo coiffeur {{ searchs.lastName }} {{ searchs.firstName }}" width="640" height="275">
-                {%else %}
+            <div class=" col-md-3">
+                <div class="card">
+                    {%if searchs.avatar is not null %}
+                    <img class="card-img-top" src="{{ asset('uploads/images/' ~ searchs.avatar ~ '')}}" alt="photo coiffeur {{ searchs.lastName }} {{ searchs.firstName }}" width="640" height="275">
+                    {%else %}
 
-                <div class="text-center" style="margin-bottom:250px;">Pohto indisponible</div>
+                    <div class="text-center" style="margin-bottom:250px;">Pohto indisponible</div>
 
-                {% endif %}
+                    {% endif %}
 
-                <div class="card-body">
-                    <h5 class="card-title">{{ searchs.lastName }} {{ searchs.firstName }}</h5>
-                    <p class="card-text">
-                        {{ searchs.bio }}
-                    </p>
-                    <p class="card-text"><small class="text-muted"><i class="fas fa-map-marker-alt"></i> {{ searchs.city }}</small></p>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ searchs.lastName }} {{ searchs.firstName }}</h5>
+                        <p class="card-text">
+                            {{ searchs.bio }}
+                        </p>
+                        <p class="card-text"><small class="text-muted"><i class="fas fa-map-marker-alt"></i> {{ searchs.city }}</small></p>
 
-                    
-                </div>
-                <div class="card-footer">
-                    <a href="{{ path('coiffeur', { 'id': searchs.id }) }}" class="btn btn-block btn-primary">Voir la carte</a>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('coiffeur', { 'id': searchs.id }) }}" class="btn btn-block btn-primary">Voir la carte</a>
+                    </div>
                 </div>
             </div>
-
             {% endfor %}
         </div>
     </section>
