@@ -22,7 +22,7 @@ class CoiffeurController extends Controller
     	$card = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId()));
 
         return $this->render('AppBundle:Coiffeur:coiffeur.html.twig', [
-            'card' => $card,
+            'cards' => $card,
         ]);
 
     }

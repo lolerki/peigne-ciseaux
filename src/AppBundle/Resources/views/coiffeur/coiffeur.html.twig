@@ -2,19 +2,50 @@
 
 {% block body %}
 
-{{ dump(card) }}
+<div class="container">
 
-<h2>Coiffeur</h2>
+	<a href="" class="btn btn-secondary">Retour</a>
 
-{% for cards in card %}
+	<hr>
 
-	Nom : {{ cards.idUser.lastName }}<br>
-	Prenom : {{ cards.idUser.firstName }}<br>
-	Coupe : {{ cards.name }}<br>
-	Categorie : {{ cards.category }}<br>
-	Prix : {{ cards.price }}<br>
+	<div class="row">
+		<div class="col-md-6">
 
- {% endfor %}
+			<h2>{{ cards[0].idUser.firstName }} {{ cards[0].idUser.lastName }}</h2>
 
+			<img src="{{ asset('uploads/images/' ~ cards[0].idUser.avatar ~ '')}}" width="300px" height="275px"><br>
 
+			<i class="fas fa-map-marker-alt"></i> {{ cards[0].idUser.city }}<br><br>
+			<p>{{ cards[0].idUser.bio }}</p>
+
+		</div>
+
+		<div class="col-md-6">
+			<h2>La carte</h2>
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Genre</th>
+						<th scope="col">Nom</th>
+						<th scope="col">Prix</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for card in cards %}
+					<tr>
+						<th>{{ card.category }}</th>
+						<td>{{ card.name }}</td>
+						<td>{{ card.price }}€</td>
+						<td><a href="" class="btn btn-primary">Je commande</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
 {% endblock %}

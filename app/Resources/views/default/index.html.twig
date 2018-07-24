@@ -47,7 +47,7 @@
         <h2>Les coiffeurs disponible dans votre région :</h2>
         <hr/>
 
-        <div class="card-group">
+        <div class="card-deck">
 
             {% for searchs in search %}
             <div class="card">
@@ -64,9 +64,12 @@
                     <p class="card-text">
                         {{ searchs.bio }}
                     </p>
-                    <p class="card-text"><small class="text-muted">{{ searchs.city }}</small></p>
+                    <p class="card-text"><small class="text-muted"><i class="fas fa-map-marker-alt"></i> {{ searchs.city }}</small></p>
 
-                    <a href="{{ path('coiffeur', { 'id': searchs.id }) }}" class="btn btn-primary">Je commande</a>
+                    
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('coiffeur', { 'id': searchs.id }) }}" class="btn btn-block btn-primary">Voir la carte</a>
                 </div>
             </div>
 
