@@ -11,22 +11,22 @@
 	<div class="row">
 		<div class="col-md-6">
 
-			<h2>{{ cards[0].idUser.firstName }} {{ cards[0].idUser.lastName }}</h2>
+			<h2>{{ cardsMens[0].idUser.firstName }} {{ cardsMens[0].idUser.lastName }}</h2>
 
-			<img src="{{ asset('uploads/images/' ~ cards[0].idUser.avatar ~ '')}}" width="300px" height="275px"><br>
+			<img src="{{ asset('uploads/images/' ~ cardsMens[0].idUser.avatar ~ '')}}" width="300px" height="275px"><br>
 
-			<i class="fas fa-map-marker-alt"></i> {{ cards[0].idUser.city }}<br><br>
-			<p>{{ cards[0].idUser.bio }}</p>
+			<i class="fas fa-map-marker-alt"></i> {{ cardsMens[0].idUser.city }}<br><br>
+			<p>{{ cardsMens[0].idUser.bio }}</p>
 
 		</div>
 
 		<div class="col-md-6">
 			<h2>La carte</h2>
-
+			{% if cardsMens == true %}
+			Hommes
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th scope="col">Genre</th>
 						<th scope="col">Nom</th>
 						<th scope="col">Prix</th>
 						<th scope="col">Action</th>
@@ -34,16 +34,62 @@
 				</thead>
 
 				<tbody>
-					{% for card in cards %}
+					{% for cardMen in cardsMens %}
 					<tr>
-						<th>{{ card.category }}</th>
-						<td>{{ card.name }}</td>
-						<td>{{ card.price }}€</td>
+						<td>{{ cardMen.name }}</td>
+						<td>{{ cardMen.price }}€</td>
 						<td><a href="" class="btn btn-primary">Je commande</a></td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
+			{% endif %}
+
+			{% if cardsWomens == true %}
+			Femmes
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nom</th>
+						<th scope="col">Prix</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for cardWomen in cardsWomens %}
+					<tr>
+						<td>{{ cardWomen.name }}</td>
+						<td>{{ cardWomen.price }}€</td>
+						<td><a href="" class="btn btn-primary">Je commande</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% endif %}
+
+			{% if cardsChild == true %}
+			Enfants
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nom</th>
+						<th scope="col">Prix</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for cardChild in cardsChild %}
+					<tr>
+						<td>{{ cardChild.name }}</td>
+						<td>{{ cardChild.price }}€</td>
+						<td><a href="" class="btn btn-primary">Je commande</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% endif %}
 		</div>
 	</div>
 

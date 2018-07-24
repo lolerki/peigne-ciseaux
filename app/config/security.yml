@@ -7,7 +7,7 @@ security:
         ROLE_CLIENT: ROLE_CLIENT
         ROLE_COIFFEUR: ROLE_COIFFEUR
         ROLE_ADMIN:       ROLE_ADMIN
-        ROLE_SUPER_ADMIN: ROLE_SUPER_ADMIN
+        ROLE_SUPER_ADMIN: ROLE_SUPER_ADMIN, ROLE_ADMIN
 
     providers:
         fos_userbundle:
