@@ -29,9 +29,9 @@ class RendezVous
     private $date;
 
     /**
-     * @var string
+     * @var time
      *
-     * @ORM\Column(name="heure", type="text", nullable=false)
+     * @ORM\Column(name="heure", type="time", nullable=false)
      */
     private $heure;
 
@@ -104,7 +104,7 @@ class RendezVous
     /**
      * Set heure
      *
-     * @param string $heure
+     * @param time $heure
      *
      * @return RendezVous
      */
@@ -118,7 +118,7 @@ class RendezVous
     /**
      * Get heure
      *
-     * @return string
+     * @return time
      */
     public function getHeure()
     {

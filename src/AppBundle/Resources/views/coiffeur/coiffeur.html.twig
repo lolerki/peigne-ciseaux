@@ -25,11 +25,11 @@
 			{% if cardsMens == true %}
 			Hommes
 			<table class="table table-striped">
-				<thead>
+				<thead class="text-center">
 					<tr>
 						<th scope="col">Nom</th>
 						<th scope="col">Prix</th>
-						<th scope="col">Action</th>
+						<th scope="col" class="text-right">Action</th>
 					</tr>
 				</thead>
 
@@ -37,8 +37,12 @@
 					{% for cardMen in cardsMens %}
 					<tr>
 						<td>{{ cardMen.name }}</td>
-						<td>{{ cardMen.price }}€</td>
-						<td><a href="" class="btn btn-primary">Je commande</a></td>
+						<td class="text-center">{{ cardMen.price }}€</td>
+						<td class="text-right">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardMen.id }}">
+                                Je commande
+                            </button>
+                        </td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -48,11 +52,11 @@
 			{% if cardsWomens == true %}
 			Femmes
 			<table class="table table-striped">
-				<thead>
+				<thead class="text-center">
 					<tr>
 						<th scope="col">Nom</th>
-						<th scope="col">Prix</th>
-						<th scope="col">Action</th>
+						<th scope="col" class="text-center">Prix</th>
+						<th scope="col" class="text-right">Action</th>
 					</tr>
 				</thead>
 
@@ -60,8 +64,12 @@
 					{% for cardWomen in cardsWomens %}
 					<tr>
 						<td>{{ cardWomen.name }}</td>
-						<td>{{ cardWomen.price }}€</td>
-						<td><a href="" class="btn btn-primary">Je commande</a></td>
+						<td class="text-center">{{ cardWomen.price }}€</td>
+						<td class="text-right">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardWomen.id }}">
+                                Je commande
+                            </button>
+                        </td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -71,11 +79,11 @@
 			{% if cardsChild == true %}
 			Enfants
 			<table class="table table-striped">
-				<thead>
+				<thead class="text-center">
 					<tr>
 						<th scope="col">Nom</th>
 						<th scope="col">Prix</th>
-						<th scope="col">Action</th>
+						<th scope="col" class="text-right">Action</th>
 					</tr>
 				</thead>
 
@@ -83,8 +91,12 @@
 					{% for cardChild in cardsChild %}
 					<tr>
 						<td>{{ cardChild.name }}</td>
-						<td>{{ cardChild.price }}€</td>
-						<td><a href="" class="btn btn-primary">Je commande</a></td>
+						<td class="text-center">{{ cardChild.price }}€</td>
+						<td class="text-right">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardChild.id }}">
+								Je commande
+							</button>
+                        </td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -94,4 +106,52 @@
 	</div>
 
 </div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Récupitulatif de votre commade</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+                    {{ form_start(formOrder, {'method': 'POST',  'attr': {'id': 'formOrder', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+                    <div class="form-group">
+                        {{ form_label(formOrder.date) }}
+                        {{ form_widget(formOrder.date, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                    </div>
+                    {{ form_errors(formOrder.date) }}
+                    <div class="form-group">
+                        {{ form_label(formOrder.heure) }}
+                        {{ form_widget(formOrder.heure, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
+                    </div>
+                    {{ form_errors(formOrder.heure) }}
+                    <div class="form-group">
+                        {{ form_widget(formOrder.subEnregistrer, { 'attr': {'class': 'btn btn-dark btn-block'}}) }}
+                    </div>
+
+                    {{ form_widget(formOrder.idcard) }}
+
+                    {{ form_rest(formOrder) }}
+                    {{ form_end(formOrder) }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script>
+    $('#order').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);// Button that triggered the modal
+        var id = button.data('idcard');// Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('#order_idcard').val(id);
+    });
+</script>
 {% endblock %}

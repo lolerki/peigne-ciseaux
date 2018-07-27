@@ -2,9 +2,10 @@
 
 {% block body %}
     <div class="container">
-        <section>
-			commandes
-        </section>
-
+        {% if orderSuccess %}
+            <div class="alert alert-success" role="alert">
+                Votre commande à bein été enregistré.
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

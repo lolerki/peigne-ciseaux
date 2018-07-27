@@ -5,9 +5,9 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class OrderType extends AbstractType {
@@ -18,16 +18,24 @@ class OrderType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name', TextType::class, array(
-                    'label' => 'Bio',
+                ->add('date', DateType::class, array(
+                    'widget' => 'single_text',
+                    'label' => 'date',
+                    'attr' => [
+                        'class' => 'form-control input-inline datepicker',
+                        'data-provide' => 'datepicker',
+                        'data-date-format' => 'dd-mm-yyyy'
+                    ],
                     'required' => true,
                 ))
-                ->add('heure', TextType::class, array(
-                    'label' => 'Bio',
+                ->add('heure', TimeType::class, array(
+                    'label' => 'heure',
+                    'widget' => 'choice',
                     'required' => true,
                 ))
+                ->add('idcard', HiddenType::class)
                 ->add('subEnregistrer', SubmitType::class, array(
-                    'label' => 'Enregistrer',
+                    'label' => 'Valider ma commande',
         ));
     }
 
