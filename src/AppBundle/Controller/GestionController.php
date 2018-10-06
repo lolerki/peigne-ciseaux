@@ -233,7 +233,6 @@ class GestionController extends Controller {
        $user->setBirthday($data->getBirthday());
        $user->setBio($data->getBio());
 
-       dump($user);
 
        $em->persist($user);
        $em->flush($user);
