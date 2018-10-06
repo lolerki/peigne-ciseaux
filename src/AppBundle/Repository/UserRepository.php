@@ -18,4 +18,18 @@ class UserRepository extends EntityRepository
  
         return $query->getResult();
 	}
+
+        public function findAllUserAdmin()
+        {
+        $query = $this->getEntityManager()
+                ->createQuery("
+                SELECT u FROM AppBundle:User u
+                WHERE u.roles != :roles "
+        );
+        $query->setParameter('roles', 'ROLE_SUPER_ADMIN');
+ 
+        return $query->getResult();
+        }
+
+
 }

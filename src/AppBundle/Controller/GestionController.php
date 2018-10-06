@@ -24,6 +24,10 @@ class GestionController extends Controller {
 
       $user = $this->getUser();
 
+      if($user == null){
+        return $this->redirectToRoute('homepage');
+      }
+
       $myCard = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId(), 'valider' => '1'));
 
       $listRvd = $this->getDoctrine()->getRepository('AppBundle:RendezVous')->findBy(array("idCoiffeur" => $this->getUser(), 'valider' => null));
