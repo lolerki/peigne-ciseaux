@@ -15,6 +15,15 @@ class Note
     /**
      * @var integer
      *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="note", type="integer", nullable=false)
      */
     private $note;
@@ -22,11 +31,19 @@ class Note
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="commentaire", type="text", nullable=true)
      */
-    private $id;
+    private $commentaire;
+
+    /**
+     * @var \AppBundle\Entity\RendezVous
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RendezVous")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_rdv", referencedColumnName="id")
+     * })
+     */
+    private $idRdv;
 
     /**
      * @var \AppBundle\Entity\User
@@ -37,6 +54,16 @@ class Note
      * })
      */
     private $idUser;
+
+    /**
+     * @var \AppBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_coiffeur", referencedColumnName="id")
+     * })
+     */
+    private $idCoiffeur;
 
 
 
@@ -75,6 +102,54 @@ class Note
     }
 
     /**
+     * Set commentaire
+     *
+     * @param text $commentaire
+     *
+     * @return Note
+     */
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return text
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+
+    /**
+     * Set idRdv
+     *
+     * @param \AppBundle\Entity\RendezVous $idRdv
+     *
+     * @return Note
+     */
+    public function setIdRdv(\AppBundle\Entity\RendezVous $idRdv = null)
+    {
+        $this->idRdv = $idRdv;
+
+        return $this;
+    }
+
+    /**
+     * Get idRdv
+     *
+     * @return \AppBundle\Entity\RendezVous
+     */
+    public function getIdRdv()
+    {
+        return $this->idRdv;
+    }
+
+    /**
      * Set idUser
      *
      * @param \AppBundle\Entity\User $idUser
@@ -96,5 +171,29 @@ class Note
     public function getIdUser()
     {
         return $this->idUser;
+    }
+
+    /**
+     * Set idCoiffeur
+     *
+     * @param \AppBundle\Entity\User $idUser
+     *
+     * @return Note
+     */
+    public function setIdCoiffeur(\AppBundle\Entity\User $idCoiffeur = null)
+    {
+        $this->idCoiffeur = $idCoiffeur;
+
+        return $this;
+    }
+
+    /**
+     * Get idCoiffeur
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getIdCoiffeur()
+    {
+        return $this->idCoiffeur;
     }
 }

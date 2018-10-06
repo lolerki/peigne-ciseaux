@@ -18,24 +18,32 @@ class OrderType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('date', DateType::class, array(
-                    'widget' => 'single_text',
-                    'label' => 'date',
-                    'attr' => [
-                        'class' => 'form-control input-inline datepicker',
-                        'data-provide' => 'datepicker',
-                        'data-date-format' => 'dd-mm-yyyy'
-                    ],
-                    'required' => true,
-                ))
-                ->add('heure', TimeType::class, array(
-                    'label' => 'heure',
-                    'widget' => 'choice',
-                    'required' => true,
-                ))
-                ->add('idcard', HiddenType::class)
-                ->add('subEnregistrer', SubmitType::class, array(
-                    'label' => 'Valider ma commande',
+        ->add('date', DateType::class, array(
+            'widget' => 'single_text',
+            'label' => 'date',
+            'attr' => [
+                'min' => date('Y-m-d',strtotime( "+1 day" )),
+                'data-date-format' => 'dd-mm-yyyy',
+            ],
+            'required' => true,
+        ))
+        ->add('heure', TimeType::class, array(
+            'label' => 'heure',
+            'widget' => 'choice',
+            'required' => true,
+            'placeholder' => array(
+                'hour' => '07', 'minute' => '00', 'second' => '00',
+            ),
+            'hours' => array(
+                8,9,10,11,12,13,14,15,16,17,18,19,20,21
+            ),
+            'minutes' => array(
+                10,20,30,40,50
+            )
+        ))
+        ->add('idcard', HiddenType::class)
+        ->add('subEnregistrer', SubmitType::class, array(
+            'label' => 'Valider ma commande',
         ));
     }
 

@@ -1,12 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="title-white">Développez votre clientèle grâce à Peigne & Ciseaux !</h1>
-            <p>
-                <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary">Inscrivez-vous dès maintenant !</a>
-            </p>
-        </div>
-    </section>
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="title-white">Développez votre clientèle grâce à Peigne & Ciseaux !</h1>
+		<p>
+			<a href="{{ path('fos_user_security_login') }}#inscription" class="btn-lg btn-primary">Inscrivez-vous dès maintenant !</a>
+		</p>
+	</div>
+</section>
+<section id="services">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h2 class="section-heading text-uppercase">Pourquoi Peigne & Ciseaux ?</h2>
+				<h3 class="section-subheading text-muted">Peigne & Ciseaux aide à mettre en relation des coiffeurs indépendants avec des clients</h3>
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col-md-4">
+				<span class="fa-stack fa-4x">
+					<i class="far fa-clock"></i>
+				</span>
+				<h4 class="service-heading">Gérez vos rendez-vous</h4>
+				<p class="text-muted">Gérez vos rendez-vous</p>
+			</div>
+			<div class="col-md-4">
+				<span class="fa-stack fa-4x">
+					<i class="fas fa-users"></i>
+				</span>
+				<h4 class="service-heading">Développez votre clientèle</h4>
+				<p class="text-muted">Développez votre clientèle</p>
+			</div>
+			<div class="col-md-4">
+				<span class="fa-stack fa-4x">
+					<i class="fas fa-dollar-sign"></i>
+				</span>
+				<h4 class="service-heading">Fixez vos prix</h4>
+				<p class="text-muted">Fixez vos prix</p>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock %}

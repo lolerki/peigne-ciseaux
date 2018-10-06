@@ -1,13 +1,117 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        {#
-        {% if orderSuccess %}
-            <div class="alert alert-success" role="alert">
-                Votre commande à bein été enregistré.
-            </div>
-        {% endif %}
-         #}
-    </div>
+<div class="container container-body">
+	{% if is_granted('ROLE_CLIENT') %}
+
+	{% if orderSuccess %}
+
+	<div class="alert alert-success" role="alert">
+		Votre commande à bein été enregistré.
+	</div>  
+
+	{% endif %}
+
+	<div class="row">
+		<div class="col-3">
+			<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+				<a class="nav-link active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Commandes acceptées</a>
+				<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Commandes en attente</a>
+				<a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Commandes refusées</a>
+			</div>
+		</div>
+		<div class="col-9">
+			<div class="tab-content" id="v-pills-tabContent">
+				<div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+					
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Nom du coiffeur</th>
+								<th scope="col">Numéro</th>
+								<th scope="col">Date</th>
+								<th scope="col">Heure</th>
+								<th scope="col">Coupe</th>
+								<th scope="col">Noter le coiffeur</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for unrdv in rdvvs|reverse %}
+							<tr>
+								<th>{{ unrdv.idCoiffeur.lastName }} {{ unrdv.idCoiffeur.firstName }}</th>
+								<td>{{ unrdv.idCoiffeur.phoneNumber }}</td>
+								<td>{{ unrdv.date|date("d/m/Y", "Europe/Paris") }}</td>
+								<td>{{ unrdv.heure|date('H:i:s') }}</td>
+								<td>{{ unrdv.idCard.name }}</td>
+								<td>
+									{% if unrdv.note is null %}
+
+									<a href="{{ path('rating', {'id': unrdv.idCoiffeur.id, 'rdv' : unrdv.id}) }}" class="btn btn-success">Laissez une note</a>
+
+									{% else %}
+
+									<button class="btn btn-info">Note envoyé</button>
+
+									{% endif %}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Nom du coiffeur</th>
+								<th scope="col">Date</th>
+								<th scope="col">Heure</th>
+								<th scope="col">Coupe</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for rdv in rdvs|reverse %}
+							<tr>
+								<th>{{ rdv.idCoiffeur.lastName }} {{ rdv.idCoiffeur.firstName }}</th>
+								<td>{{ rdv.date|date("d/m/Y", "Europe/Paris") }}</td>
+								<td>{{ rdv.heure|date('H:i:s') }}</td>
+								<td>{{ rdv.idCard.name }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Nom du coiffeur</th>
+								<th scope="col">Date</th>
+								<th scope="col">Heure</th>
+								<th scope="col">Coupe</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for unrdvr in rdvrs|reverse %}
+							<tr>
+								<th>{{ unrdvr.idCoiffeur.lastName }} {{ unrdvr.idCoiffeur.firstName }}</th>
+								<td>{{ unrdvr.date|date("d/m/Y", "Europe/Paris") }}</td>
+								<td>{{ unrdvr.heure|date('H:i:s') }}</td>
+								<td>{{ unrdvr.idCard.name }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% else %}
+
+	<div class="alert alert-info">Ooops ! Une erreur c'est produite !</div>
+
+	{% endif %}
+</div>
+
 {% endblock %}

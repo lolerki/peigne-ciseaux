@@ -15,49 +15,60 @@ class CoiffeurController extends Controller
     /**
      * @Route("/coiffeur/{id}", name="coiffeur")
      */
-    public function indexAction($id, Request $request)
+    public function indexAction(Request $request, $id)
     {
+        $orderSuccess = false;
+        $total = false;
 
         //formulaire de commande
         $orderForm = $this->createForm(OrderType::class);
 
         $orderForm->handleRequest($request);
 
-    	$user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('id' => $id));
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('id' => $id));
 
-    	$cardMens = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId(), 'category' => 'homme'));
+        $cardMens = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId(), 'category' => 'homme'));
 
         $cardWomens = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId(), 'category' => 'femme'));
 
         $cardsChild = $this->getDoctrine()->getRepository('AppBundle:Card')->findBy(array('idUser' => $user->getId(), 'category' => 'enfant'));
 
+        $listNotes = $this->getDoctrine()->getRepository('AppBundle:Note')->findBy(array("idCoiffeur" => $id));
+
+        $i = 0;
+        foreach ($listNotes as $uneNote) {
+
+            $i++;
+
+            $note = $uneNote->getNote();
+
+            $total += $note;
+
+        }
+
+        if($total == false){
+
+            $moyenne = 0;
+
+        } else {
+
+            $moyenne = $total / $i;
+
+        }
 
         if ($orderForm->isSubmitted() && $orderForm->isValid()) {
 
             $data = $orderForm->getData();
-
-
-        //    $data['date']->format('d-m-y');
-
-          //  $data['heure']->format('H:i:s');
-
 
             $em = $this->getDoctrine()->getManager();
             $user = $this->getUser();
 
             $coiffeurObjet = $this->getDoctrine()->getRepository('AppBundle:User')->find(array('id' => $id));
 
-
-
-
             $cardObjet = $this->getDoctrine()->getRepository('AppBundle:Card')->find(array('id' => $data['idcard']));
-          //  dump($cardObjet->getIdUser());
 
 
             $order = new RendezVous();
-
-          //  $order->setDate($data['date']->format('d-m-y'));
-         //   $order->setHeure($data['heure']->format('H:i:s'));
 
             $order->setDate($data['date']);
             $order->setHeure($data['heure']);
@@ -70,8 +81,19 @@ class CoiffeurController extends Controller
 
             $orderSuccess = true;
 
+            $listRvd = $this->getDoctrine()->getRepository('AppBundle:RendezVous')->findBy(array("idUser" => $this->getUser(), 'valider' => 0));
+
+            $listRvdValider = $this->getDoctrine()->getRepository('AppBundle:RendezVous')->findBy(array("idUser" => $this->getUser(), 'valider' => 1));
+
+            $listRvdRefuse = $this->getDoctrine()->getRepository('AppBundle:RendezVous')->findBy(array("idUser" => $this->getUser(), 'valider' => 0));
+
+
+
             return $this->render('AppBundle:Commande:commandes.html.twig', [
                 'orderSuccess' => $orderSuccess,
+                'rdvs' => $listRvd,
+                'rdvvs' => $listRvdValider,
+                'rdvrs' => $listRvdRefuse
             ]);
 
         }
@@ -81,6 +103,7 @@ class CoiffeurController extends Controller
             'cardsMens' => $cardMens,
             'cardsWomens' => $cardWomens,
             'cardsChild' => $cardsChild,
+            'moyenne' => $moyenne
         ]);
 
     }

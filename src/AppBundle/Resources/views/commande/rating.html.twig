@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container container-body">
+	<h3 class="text-center">Noter votre coiffeur</h3>
+	<hr>
+	<a href="{{ path('orders') }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Retour</a>
+	<hr>
+
+	{{ form_start(formRating, {'attr': {'id': 'formRating', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+
+	<div class="form-group">
+		{{ form_label(formRating.note) }}
+		{{ form_widget(formRating.note, { 'attr': {'class': 'form-control form-control-sm col-sm-1'}}) }}
+	</div>
+	{{ form_errors(formRating.note) }}
+
+
+	<div class="form-group">
+		{{ form_label(formRating.commentaire) }}
+		{{ form_widget(formRating.commentaire, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+	</div>
+	{{ form_errors(formRating.commentaire) }}
+
+	{{ form_widget(formRating.subEnregistrer, { 'attr': {'class': 'btn btn-success'}}) }}
+
+	{{ form_rest(formRating) }}
+	{{ form_end(formRating) }}
+
+</div>
+{% endblock %}

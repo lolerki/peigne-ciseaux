@@ -36,6 +36,13 @@ class RendezVous
     private $heure;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="valider", type="boolean", nullable=true, options={"default":null})
+     */
+    private $valider;
+
+    /**
      * @var \AppBundle\Entity\User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
@@ -65,6 +72,12 @@ class RendezVous
      */
     private $idCard;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="note", type="boolean", nullable=true, options={"default":null})
+     */
+    private $note;
 
 
     /**
@@ -75,6 +88,20 @@ class RendezVous
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set id
+     * @param integer $id
+     *
+     * @return integer
+     *
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -123,6 +150,54 @@ class RendezVous
     public function getHeure()
     {
         return $this->heure;
+    }
+
+    /**
+     * Get valider
+     *
+     * @return boolean
+     */
+    public function getValider()
+    {
+        return $this->heure;
+    }
+
+    /**
+     * Set valider
+     *
+     * @param boolean $valider
+     *
+     * @return RendezVous
+     */
+    public function setValider($valider)
+    {
+        $this->valider = $valider;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return boolean
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Set note
+     *
+     * @param boolean $note
+     *
+     * @return RendezVous
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
     }
 
     /**

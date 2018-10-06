@@ -1,75 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container">
+<div class="container container-body">
+    {% if is_granted('ROLE_COIFFEUR') %}
     <div class="bd-example bd-example-tabs">
         <div class="row">
             <div class="col-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link BColorLink" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile active show" aria-selected="true">Ma carte</a>
+                    <a class="nav-link BColorLink active show" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile active show" aria-selected="true">Ma carte</a>
                     <a class="nav-link BColorLink" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Mes rendez-vous</a>
-                    <a class="nav-link BColorLink" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Mes informations</a>
-                    <a class="nav-link BColorLink" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mes factures</a>
+                    <a class="nav-link BColorLink" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-note" role="tab" aria-controls="v-pills-home" aria-selected="false">Mes notes</a>
                 </div>
             </div>
             <div class="col-9">
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
-                        {% if infoFormSuccess == true %}
-                        <div class="alert alert-success" role="alert">
-                          Votre profil a été mise à jours avec succès !
-                      </div>
-                      {% endif %}
-
-                      <h2>Mes informations</h2>
-
-                      <div class="formCenter">
-                        {{ form_start(formInfo, {'method': 'POST',  'attr': {'id': 'FormInfo', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-                        <div class="form-group row">
-
-                            <div class="col-sm-1">
-                                {{ form_label(formInfo.avatar) }}
-                            </div>
-                            {% if(app.user.avatar) %}
-                            <img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" class="avatar col-sm-2 " >
-                            {% endif %}
-
-                            {{ form_widget(formInfo.avatar, { 'attr': {'class': 'form-control form-control-sm col-sm-6'}}) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_label(formInfo.lastName) }}
-                            {{ form_widget(formInfo.lastName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                        </div>
-                        {{ form_errors(formInfo.lastName) }}
-                        <div class="form-group">
-                            {{ form_label(formInfo.firstName) }}
-                            {{ form_widget(formInfo.firstName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                        </div>
-                        {{ form_errors(formInfo.firstName) }}
-                        <div class="form-group">
-                            {{ form_label(formInfo.city) }}
-                            {{ form_widget(formInfo.city, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                        </div>
-                        {{ form_errors(formInfo.city) }}
-                        <div class="form-group">
-                            {{ form_label(formInfo.birthday) }}
-                            {{ form_widget(formInfo.birthday, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
-                        </div>
-                        {{ form_errors(formInfo.birthday) }}
-                        <div class="form-group">
-                            {{ form_label(formInfo.bio) }}
-                            {{ form_widget(formInfo.bio, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                        </div>
-                        {{ form_errors(formInfo.bio) }}
-                        <div class="form-group">
-                            {{ form_widget(formInfo.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
-                        </div>
-
-                        {{ form_rest(formInfo) }}
-                        {{ form_end(formInfo) }}
-                    </div>
-                </div>
                 <div class="tab-pane fade active show" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
                     {% if app.user.lastname is null %}
@@ -79,7 +24,11 @@
                     {% endif %}
 
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus-circle"></i> Ajouter un élément à la carte</button>
+                    <div class="alert alert-info" id="info-card" style="display:none;"><p></p></div>
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="fas fa-plus-circle"></i> Ajouter une coupe à la carte</button>
+                    </div>
                     <h2>Ma carte</h2>
                     <table class="table table-striped">
                         <thead>
@@ -87,102 +36,157 @@
                                 <th >Prestation</th>
                                 <th >Catégorie</th>
                                 <th >Prix</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cards in card %}
+                            {% for cards in card|reverse %}
                             <tr>
                                 <td>{{ cards.name }}</td>
                                 <td>{{ cards.category }}</td>
                                 <td>{{ cards.price }}</td>
+                                <td class="text-right">
+                                    <a href="{{ path('editCard', {'id' : cards.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a> <button class="btn btn-danger deleteCard" id="{{ cards.id }}"><i class="fas fa-trash-alt"></i></button>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                    <h2>Mes prestations</h2>
+
+                    <div class="alert alert-success" style="display:none;" id="notif"><p></p></div>
+                    
+                    <nav>
+                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Commande en attentes</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Commande acceptées</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Commande refusées</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Client</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Prix</th>
+                                <th scope="col">Nom du client</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Num&ro</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                                <td>@mdo</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                    <h2>Mes factures</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Titre</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Tarif</th>
+                                <th scope="col">Heure</th>
+                                <th scope="col">Coupe</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for rvd in rdvs|reverse %}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <th>{{ rvd.idUser.lastName }} {{ rvd.idUser.firstName }}</th>
+                                <td>{{ rvd.date|date("d/m/Y", "Europe/Paris") }}</td>
+                                <td>{{ rvd.heure|date('H:i:s') }}</td>
+                                <td>{{ rvd.idCard.name }}</td>
+                                <td><button class="btn btn-success text-left validerRvd" id="{{ rvd.id }}"><i class="fas fa-check"></i></button> <button class="btn btn-danger text-right cancelRvd" id="{{ rvd.id }}"><i class="fas fa-ban"></i></button></td>
                             </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
+                                <th scope="col">Nom du coiffeur</th>
+                                <th scope="col">Numéro</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Heure</th>
+                                <th scope="col">Coupe</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            {% for unrdv in rdvvs|reverse %}
                             <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
+                                <th>{{ unrdv.idUser.lastName }} {{ unrdv.idUser.firstName }}</th>
+                                <td>{{ unrdv.idUser.phoneNumber }}</td>
+                                <td>{{ unrdv.date|date("d/m/Y", "Europe/Paris") }}</td>
+                                <td>{{ unrdv.heure|date('H:i:s') }}</td>
+                                <td>{{ unrdv.idCard.name }}</td>
                             </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nom du coiffeur</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Heure</th>
+                                <th scope="col">Coupe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for unrdvr in rdvrs|reverse %}
+                            <tr>
+                                <th>{{ unrdvr.idUser.lastName }} {{ unrdvr.idUser.firstName }}</th>
+                                <td>{{ unrdvr.date|date("d/m/Y", "Europe/Paris") }}</td>
+                                <td>{{ unrdvr.heure|date('H:i:s') }}</td>
+                                <td>{{ unrdvr.idCard.name }}</td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
+
+        </div>
+        <div class="tab-pane fade" id="v-pills-note" role="tabpanel" aria-labelledby="v-pills-note">
+
+            <h2>Mes notes</h2>
+
+            <div class="text-center">
+                {% if moyenne == 0 %}
+                <div class="alert alert-info">Aucun client ne vous as noté</div>
+                {% else %}
+                <buttton class="btn btn-info">Moyenne : {{ moyenne }}/5 <i class="far fa-star"></i></buttton><br><br>
+                {% endif %}
+                
+            </div>
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Note</th>
+                        <th scope="col">Commentaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for note in notes|reverse %}
+                    <tr>
+                        <th>{{ note.note }}</th>
+                        <td>{{ note.commentaire }}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>
 </div>
+</div>
+{% else %}
 
+<div class="alert alert-info">Ooops ! Une erreur c'est produite !</div>
+
+{% endif %}
+</div>
 
 <!-- Modal Ajouter un élément -->
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un élément a la carte</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une coupe à la carte</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -191,16 +195,16 @@
                 <div class="formCenter">
                     {{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormAnnonce', 'role': 'form', 'class' : 'form-horizontal' }}) }}
                     <div class="form-group">
-                        {{ form_label(form.type) }}
-                        {{ form_widget(form.type, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                        {{ form_label(form.category) }}
+                        {{ form_widget(form.category, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.titre) }}
-                        {{ form_widget(form.titre, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.prix) }}
-                        {{ form_widget(form.prix, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+                        {{ form_label(form.price) }}
+                        {{ form_widget(form.price, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
                     </div>
                     <div class="form-group">
                         {{ form_widget(form.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
@@ -213,10 +217,87 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary">Ajouter à la carte</button>
             </div>
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+
+    $('.validerRvd').click(function() {
+
+        var data = $(this).attr('id');
+
+        $(this).parent().parent().addClass('enabeled');
+
+        var url = "{{ path('validerRdv', {'id': 'id_rdv'})}}";
+        url = url.replace("id_rdv", data);
+
+        var formSerialize = $(this).serialize();
+
+        $.post(url, formSerialize, function(response) {
+
+            $('#notif p').html(response['message']);
+            $('#notif').removeClass('alert-danger');
+            $('#notif').addClass('alert-success');
+            $('.enabeled').fadeOut(100);
+            $('#notif').fadeIn(500);
+
+        }, "JSON");
+    });
+
+    $('.cancelRvd').click(function() {
+
+        var data = $(this).attr('id');
+
+        $(this).parent().parent().addClass('cancel');
+
+        var url = "{{ path('cancelRdv', {'id': 'id_rdv'})}}";
+        url = url.replace("id_rdv", data);
+
+        var formSerialize = $(this).serialize();
+
+        $.post(url, formSerialize, function(response) {
+
+            $('#notif p').html(response['message']);
+            $('#notif').removeClass('alert-success');
+            $('#notif').addClass('alert-danger');
+            $('.cancel').fadeOut(100);
+            $('#notif').fadeIn(500);
+
+        }, "JSON");
+    });
+
+    $('.deleteCard').click(function() {
+
+        var data = $(this).attr('id');
+
+        $(this).parent().parent().addClass('delete');
+
+        var url = "{{ path('deleteCard', {'id': 'id_card'})}}";
+        url = url.replace("id_card", data);
+
+        var formSerialize = $(this).serialize();
+
+        $.post(url, formSerialize, function(response) {
+
+            $('#info-card p').html(response['message']);
+
+            if(response['result'] == 'success'){
+
+                $('.delete').fadeOut(100);
+
+            }
+
+            $('#info-card').fadeIn(500);
+
+        }, "JSON");
+    });
+
+    
+</script>
 {% endblock %}

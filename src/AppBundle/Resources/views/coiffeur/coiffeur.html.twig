@@ -3,155 +3,188 @@
 {% block body %}
 
 <div class="container">
+	{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-6">
+				<h3>{{ cardsMens[0].idUser.firstName }} {{ cardsMens[0].idUser.lastName }}</h3>
 
-	<a href="" class="btn btn-secondary">Retour</a>
+				<img src="{{ asset('uploads/images/' ~ cardsMens[0].idUser.avatar ~ '')}}" width="300px" height="275px"><br/>
 
-	<hr>
+				<i class="fas fa-map-marker-alt"></i> {{ cardsMens[0].idUser.city }}<br/>
+				
+				{% if moyenne == 0 %}
+				<p>Le coiffeur n'a pas encore été noté</p>
+				{% else %}
+				Note : {{ moyenne }}\5 <i class="fas fa-star"></i>
+				{% endif %}
 
-	<div class="row">
-		<div class="col-md-6">
+			</div>
 
-			<h2>{{ cardsMens[0].idUser.firstName }} {{ cardsMens[0].idUser.lastName }}</h2>
-
-			<img src="{{ asset('uploads/images/' ~ cardsMens[0].idUser.avatar ~ '')}}" width="300px" height="275px"><br/>
-
-			<i class="fas fa-map-marker-alt"></i> {{ cardsMens[0].idUser.city }}<br/><br/>
-			<p>{{ cardsMens[0].idUser.bio }}</p>
-
-		</div>
-
-		<div class="col-md-6">
-			<h2>La carte</h2>
-			{% if cardsMens == true %}
-			Hommes
-			<table class="table table-striped">
-				<thead class="text-center">
-					<tr>
-						<th scope="col">Nom</th>
-						<th scope="col">Prix</th>
-						<th scope="col" class="text-right">Action</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{% for cardMen in cardsMens %}
-					<tr>
-						<td>{{ cardMen.name }}</td>
-						<td class="text-center">{{ cardMen.price }}€</td>
-						<td class="text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardMen.id }}">
-                                Je commande
-                            </button>
-                        </td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			{% endif %}
-
-			{% if cardsWomens == true %}
-			Femmes
-			<table class="table table-striped">
-				<thead class="text-center">
-					<tr>
-						<th scope="col">Nom</th>
-						<th scope="col" class="text-center">Prix</th>
-						<th scope="col" class="text-right">Action</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{% for cardWomen in cardsWomens %}
-					<tr>
-						<td>{{ cardWomen.name }}</td>
-						<td class="text-center">{{ cardWomen.price }}€</td>
-						<td class="text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardWomen.id }}">
-                                Je commande
-                            </button>
-                        </td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			{% endif %}
-
-			{% if cardsChild == true %}
-			Enfants
-			<table class="table table-striped">
-				<thead class="text-center">
-					<tr>
-						<th scope="col">Nom</th>
-						<th scope="col">Prix</th>
-						<th scope="col" class="text-right">Action</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{% for cardChild in cardsChild %}
-					<tr>
-						<td>{{ cardChild.name }}</td>
-						<td class="text-center">{{ cardChild.price }}€</td>
-						<td class="text-right">
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardChild.id }}">
-								Je commande
-							</button>
-                        </td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			{% endif %}
-		</div>
-	</div>
-
-</div>
-
-	<!-- Modal -->
-	<div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Récupitulatif de votre commade</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-                    {{ form_start(formOrder, {'method': 'POST',  'attr': {'id': 'formOrder', 'role': 'form', 'class' : 'form-horizontal' }}) }}
-                    <div class="form-group">
-                        {{ form_label(formOrder.date) }}
-                        {{ form_widget(formOrder.date, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
-                    </div>
-                    {{ form_errors(formOrder.date) }}
-                    <div class="form-group">
-                        {{ form_label(formOrder.heure) }}
-                        {{ form_widget(formOrder.heure, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
-                    </div>
-                    {{ form_errors(formOrder.heure) }}
-                    <div class="form-group">
-                        {{ form_widget(formOrder.subEnregistrer, { 'attr': {'class': 'btn btn-dark btn-block'}}) }}
-                    </div>
-
-                    {{ form_widget(formOrder.idcard) }}
-
-                    {{ form_rest(formOrder) }}
-                    {{ form_end(formOrder) }}
-				</div>
+			<div class="col-md-6">
+				<h3>A propos du coiffeur :</h3>
+				<p>{{ cardsMens[0].idUser.bio }}</p>
 			</div>
 		</div>
 	</div>
 
+	<div class="col-md-12">
+
+		<h3 class="text-center">La carte</h3>
+		<hr>
+
+		<div class="row">
+
+
+			{% if cardsMens == true %}
+
+			<div class="col-md-4">
+				Hommes
+				<table class="table table-striped">
+					<thead class="text-center">
+						<tr>
+							<th scope="col">Nom</th>
+							<th scope="col">Prix</th>
+							<th scope="col" class="text-right">Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for cardMen in cardsMens %}
+						<tr>
+							<td>{{ cardMen.name }}</td>
+							<td class="text-center">{{ cardMen.price }}€</td>
+							<td class="text-right">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardMen.id }}">
+									Je commande
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% endif %}
+
+			{% if cardsWomens == true %}
+			<div class="col-md-4">
+				Femmes
+				<table class="table table-striped">
+					<thead class="text-center">
+						<tr>
+							<th scope="col">Nom</th>
+							<th scope="col" class="text-center">Prix</th>
+							<th scope="col" class="text-right">Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for cardWomen in cardsWomens %}
+						<tr>
+							<td>{{ cardWomen.name }}</td>
+							<td class="text-center">{{ cardWomen.price }}€</td>
+							<td class="text-right">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardWomen.id }}">
+									Je commande
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% endif %}
+
+			{% if cardsChild == true %}
+			<div class="col-md-4">
+				Enfants
+				<table class="table table-striped">
+					<thead class="text-center">
+						<tr>
+							<th scope="col">Nom</th>
+							<th scope="col">Prix</th>
+							<th scope="col" class="text-right">Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for cardChild in cardsChild %}
+						<tr>
+							<td>{{ cardChild.name }}</td>
+							<td class="text-center">{{ cardChild.price }}€</td>
+							<td class="text-right">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" data-idcard="{{ cardChild.id }}">
+									Je commande
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	{% else %}
+
+	<div class="alert alert-info">Vous devez être connecté pour continuer</div>
+
+	{% endif %}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Récupitulatif de votre commade</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{{ form_start(formOrder, {'method': 'POST',  'attr': {'id': 'formOrder', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+				<div class="form-group">
+					{{ form_label(formOrder.date) }}
+					{{ form_widget(formOrder.date, { 'attr': {'id': 'datepicker', 'class': 'form-control form-control-sm col-sm-9 date'}}) }}
+				</div>
+				{{ form_errors(formOrder.date) }}
+				<div class="form-group">
+					{{ form_label(formOrder.heure) }}
+					{{ form_widget(formOrder.heure, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
+				</div>
+				{{ form_errors(formOrder.heure) }}
+				<div class="form-group">
+					{{ form_widget(formOrder.subEnregistrer, { 'attr': {'class': 'btn btn-dark btn-block'}}) }}
+				</div>
+
+				{{ form_widget(formOrder.idcard) }}
+
+				{{ form_rest(formOrder) }}
+				{{ form_end(formOrder) }}
+			</div>
+		</div>
+	</div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-    <script>
-    $('#order').on('show.bs.modal', function (event) {
+{{parent()}}
+
+<script>
+	$('#order').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);// Button that triggered the modal
         var id = button.data('idcard');// Extract info from data-* attributes
         var modal = $(this);
         modal.find('#order_idcard').val(id);
     });
+$(window).load(function(){
+  var dateToday = new Date();
+  var dates = $("#datepicker").datepicker({
+      defaultDate: "+1w",
+      minDate: dateToday
+  });
+});
 </script>
 {% endblock %}

@@ -44,6 +44,13 @@ class Card
     private $price;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="valider", type="boolean", nullable=true, options={"default":null})
+     */
+    private $valider;
+
+    /**
      * @var \AppBundle\Entity\User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
@@ -133,6 +140,30 @@ class Card
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Get valider
+     *
+     * @return boolean
+     */
+    public function getValider()
+    {
+        return $this->heure;
+    }
+
+    /**
+     * Set valider
+     *
+     * @param boolean $valider
+     *
+     * @return RendezVous
+     */
+    public function setValider($valider)
+    {
+        $this->valider = $valider;
+
+        return $this;
     }
 
     /**

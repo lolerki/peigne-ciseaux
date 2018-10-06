@@ -1,84 +1,145 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-3">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Utilisateur</a>
-                    <a class="nav-link BColorLink" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Commande</a>
-                </div>
+{% if is_granted('ROLE_ADMIN') %}
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active show" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Utilisateur</a>
+                <a class="nav-link BColorLink" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Commande</a>
             </div>
-            <div class="col-9">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <h2>Liste des utilisateurs</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Prénom</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Tel</th>
-                                    <th scope="col">Rôle</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+        </div>
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+                    <div class="alert alert-info" style="display:none;" id="notif"><p></p></div>
+
+                    <h2>Liste des utilisateurs</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Tel</th>
+                                <th scope="col">Rôle</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {% for user in users %}
-                                <tr>
-                                    <th scope="row">{{ user.id }}</th>
-                                    <td>{{ user.lastName }}</td>
-                                    <td>{{ user.firstName }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.phoneNumber }}</td>
-                                    <td>{{  user.roles[0] }}</td>
-                                    <td><button class="btn btn-warning">Modifier</button></td>
-                                </tr>
+                            <tr>
+                                <th scope="row">{{ user.id }}</th>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phoneNumber }}</td>
+                                <td>{{ user.roles[0] }}</td>
+                                <td>
+                                    {% if user.enabled == '1' %}
+                                    <button class="btn btn-danger disableUser" id="{{ user.id }}"><i class="fas fa-ban"></i></button>
+                                    {% else %}
+                                    <button class="btn btn-info enabledUser" id="{{ user.id }}"><i class="fas fa-undo"></i></button>
+                                    {% endif %}
+                                </td>
+                            </tr>
                             {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                        <h2>Commande passé</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Prénom</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Activer</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>@mdo</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Coiffeur</th>
+                                <th scope="col">Client</th>
+                                <th scope="col">Numéro</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Heure</th>
+                                <th scope="col">Coupe</th>
+                                <th scope="col">Statut</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+                            {% for rvd in rvds %}
+                            <tr>
+                                <th>{{ rvd.idCoiffeur.lastName }} {{ rvd.idCoiffeur.firstName }}</th>
+                                <th>{{ rvd.idUser.lastName }} {{ rvd.idUser.firstName }}</th>
+                                <td>{{ rvd.idCoiffeur.phoneNumber }}</td>
+                                <td>{{ rvd.date|date("d/m/Y", "Europe/Paris") }}</td>
+                                <td>{{ rvd.heure|date('H:i:s') }}</td>
+                                <td>{{ rvd.idCard.name }}</td>
+                                <td>
+                                    {% if date(rvd.date) > date() %}
+                                    <button class="btn btn-info">Terminé</button>
+                                    {% else %}
+                                    <button class="btn btn-warning">En cours</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
+{% else %}
+
+<div class="alert alert-info">Ooops ! Une erreur c'est produite !</div>
+
+{% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+
+    $('.enabledUser').click(function() {
+
+        var data = $(this).attr('id');
+
+        var url = "{{ path('enabledUser', {'id': 'id_user'})}}";
+        url = url.replace("id_user", data);
+
+        var formSerialize = $(this).serialize();
+
+        $.post(url, formSerialize, function(response) {
+
+            $('#notif p').html(response['message']);
+            $('#notif').fadeIn(500);
+
+
+        }, "JSON");
+    });
+
+    $('.disableUser').click(function() {
+
+        var data = $(this).attr('id');
+
+        var url = "{{ path('disableUser', {'id': 'id_user'})}}";
+        url = url.replace("id_user", data);
+
+        var formSerialize = $(this).serialize();
+
+        $.post(url, formSerialize, function(response) {
+
+            $('#notif p').html(response['message']);
+            $('#notif').fadeIn(500);
+
+
+        }, "JSON");
+    });
+
+</script>
 {% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+	
+	{% if infoFormSuccess == true %}
+	<div class="alert alert-success" role="alert">
+		Votre profil a été mise à jours avec succès !
+	</div>
+	{% endif %}
+
+	<h2>Mes informations</h2>
+
+	<div class="formCenter">
+		{{ form_start(formInfo, {'method': 'POST',  'attr': {'id': 'FormInfo', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+		<div class="form-group row">
+
+			<div class="col-sm-1">
+				{{ form_label(formInfo.avatar) }}
+			</div>
+			{% if(app.user.avatar) %}
+			<img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" class="avatar col-sm-2 " >
+			{% endif %}
+
+			{{ form_widget(formInfo.avatar, { 'attr': {'class': 'form-control form-control-sm col-sm-6'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(formInfo.lastName) }}
+			{{ form_widget(formInfo.lastName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+		</div>
+		{{ form_errors(formInfo.lastName) }}
+		<div class="form-group">
+			{{ form_label(formInfo.firstName) }}
+			{{ form_widget(formInfo.firstName, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+		</div>
+		{{ form_errors(formInfo.firstName) }}
+		<div class="form-group">
+			{{ form_label(formInfo.city) }}
+			{{ form_widget(formInfo.city, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+		</div>
+		{{ form_errors(formInfo.city) }}
+		<div class="form-group">
+			{{ form_label(formInfo.birthday) }}
+			{{ form_widget(formInfo.birthday, { 'attr': {'class': ' form-control-sm col-sm-9'}}) }}
+		</div>
+		{{ form_errors(formInfo.birthday) }}
+		<div class="form-group">
+			{{ form_label(formInfo.bio) }}
+			{{ form_widget(formInfo.bio, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+		</div>
+		{{ form_errors(formInfo.bio) }}
+		<div class="form-group">
+			{{ form_widget(formInfo.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
+		</div>
+
+		{{ form_rest(formInfo) }}
+		{{ form_end(formInfo) }}
+	</div>
+
+</div>
+{% endblock %}

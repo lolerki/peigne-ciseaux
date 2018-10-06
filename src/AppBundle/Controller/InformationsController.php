@@ -21,14 +21,11 @@ class InformationsController extends Controller
     	$infoFormClient = $this->createForm(InformationClientType::class, $user);
     	$infoFormClient->handleRequest($request);
 
-
     	if ($infoFormClient->isSubmitted() && $infoFormClient->isValid()) {
-
 
     		$data = $infoFormClient->getData();
 
     		$em = $this->getDoctrine()->getManager();
-
 
     		$user->setFirstName($data->getFirstName());
     		$user->setLastName($data->getLastName());

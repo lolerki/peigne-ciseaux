@@ -3,6 +3,10 @@
 {% block body %}
 
 <div class="container">
+    {% if is_granted('ROLE_CLIENT') %}
+
+    <h3 class="text-center">Modifier mon profil</h3>
+    <hr>
     <div class="col-md-12">
         {{ form_start(formInfoClient, {'attr': {'id': 'formInfoClient', 'role': 'form', 'class' : 'form-horizontal' }}) }}
 
@@ -39,10 +43,17 @@
         </div>
         {{ form_errors(formInfoClient.zipcode) }}
 
+        {{ form_widget(formInfoClient.subEnregistrer, { 'attr': {'id': 'btn', 'class': 'btn btn-success'}}) }}
+
         {{ form_rest(formInfoClient) }}
         {{ form_end(formInfoClient) }}
 
     </div>
+    {% else %}
+
+    <div class="alert alert-info">Ooops ! Une erreur c'est produite !</div>
+
+    {% endif %}
 </div>
 
 

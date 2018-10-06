@@ -47,3 +47,19 @@
     width: 100px;
     height: 100px;
 }
+
+.input-group-box{
+    display: -webkit-box;
+}
+
+.jumbotron{
+    border-radius: .0rem !important;
+}
+
+.gray{
+    background-color: #F5F5F5;
+}
+
+.container-body{
+    height: calc(90vh);
+}
