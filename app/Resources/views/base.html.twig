@@ -121,7 +121,6 @@
              * chargement du formulaire d'insciption
              */
              $("body").on("click", "#inscription-tab", function (e) {
-                $('.date').datepicker({ minDate: 0 });
                 $.ajax({
                     url: "{{ path('fos_user_registration_register') }}",
                     type: 'POST',

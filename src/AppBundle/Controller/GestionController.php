@@ -65,9 +65,9 @@ class GestionController extends Controller {
 
        $em = $this->getDoctrine()->getManager();
 
-       $card->setName($data['titre']);
-       $card->setCategory($data['type']);
-       $card->setPrice($data['prix']);
+       $card->setName($data['name']);
+       $card->setCategory($data['category']);
+       $card->setPrice($data['price']);
        $card->setValider(1);
        $card->setIdUser($user);
 
