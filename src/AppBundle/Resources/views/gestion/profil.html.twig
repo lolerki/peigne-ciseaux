@@ -19,7 +19,9 @@
 				{{ form_label(formInfo.avatar) }}
 			</div>
 			{% if(app.user.avatar) %}
-			<img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" class="avatar col-sm-2 " >
+			<div>
+			<img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" class="avatar" >
+			</div>
 			{% endif %}
 
 			{{ form_widget(formInfo.avatar, { 'attr': {'class': 'form-control form-control-sm col-sm-6'}}) }}

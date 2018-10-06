@@ -203,31 +203,40 @@ class GestionController extends Controller {
     {
 
       $infoFormSuccess = false;
-      $user = $this->getUser();
+      $userInfo = $this->getUser();
 
-      $infoForm = $this->createForm(InformationsType::class, $user);
+      $infoForm = $this->createForm(InformationsType::class, $userInfo);
       $infoForm->handleRequest($request);
 
       if ($infoForm->isSubmitted() && $infoForm->isValid()) {
 
        $data = $infoForm->getData();
 
-       $file = $user->getAvatar();
-       $fileName = $fileUploader->upload($file);
+       if($data->getAvatar() != null){
+         $file = $userInfo->getAvatar();
+         $fileName = $fileUploader->upload($file);
+       } else {
+        $fileName = $userInfo->getAvatar();
+       }
 
        $em = $this->getDoctrine()->getManager();
 
+       $user = $em->getReference('AppBundle:User', $userInfo->getId());
+
             //on recupére notre objet user
             //on le modifie
-       $user->setAvatar($fileName);
+
+      $user->setAvatar($fileName);
        $user->setFirstName($data->getFirstName());
        $user->setLastName($data->getLastName());
        $user->setCity($data->getCity());
        $user->setBirthday($data->getBirthday());
        $user->setBio($data->getBio());
 
+       dump($user);
+
        $em->persist($user);
-       $em->flush();
+       $em->flush($user);
 
        $infoFormSuccess = true;
 
