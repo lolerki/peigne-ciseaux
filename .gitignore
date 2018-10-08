@@ -4,7 +4,7 @@
 .project
 .settings
 .idea
-.ngrok
+ngrok
 
 # Email spool folder
 /app/spool/*
