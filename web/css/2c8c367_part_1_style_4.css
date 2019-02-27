@@ -1,0 +1,65 @@
+.padding-top{
+	padding-top: 1%;
+}
+
+#top{
+    background-image: url("../../bundles/app/images/hair_hairstyle_bride_wedding.jpg");
+    width: 100%;
+}
+
+.jumbotron{
+    background-image: url("../../bundles/app/images/hair-male.jpg") !important;
+}
+
+.title-white{
+    color: #FFFFFF;
+}
+
+.nav-pills .nav-link.active{
+    background-color: #000;
+}
+
+.BColorLink{
+    color: #000;
+}
+
+.navbar{
+    margin-bottom: 1%;
+}
+
+.colorBtn{
+    background-color: black;
+    color: white;
+}
+
+.formCenter{
+    margin: auto;
+}
+
+#avatarNavBar{
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.avatar{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.input-group-box{
+    display: -webkit-box;
+}
+
+.jumbotron{
+    border-radius: .0rem !important;
+}
+
+.gray{
+    background-color: #F5F5F5;
+}
+
+.container-body{
+    height: calc(90vh);
+}

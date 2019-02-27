@@ -1,43 +1,139 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <title>{% block title %}Peigne & Ciseaux{% endblock %}</title>
-      {% block stylesheets %}
-        {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-          <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-      {% endblock %}
-      <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-  </head>
-  <body>
-
+    {% block stylesheets %}
+    {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="{{ path('homepage') }}">Peigne & Ciseaux</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="form-inline my-2 my-lg-0">
-          {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-          <a href="{{ path('fos_user_security_logout') }}" class="btn btn-outline-danger">Déconnexion</a>
-          {% else %}
-            <a href="{{ path('fos_user_security_login') }}" class="btn btn-outline-success">Se connecter</a>
-          {% endif %}
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('homepage') }}">Peigne & Ciseaux</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="form-inline my-2 my-lg-0">
+                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if(app.user.avatar) %}
+                        <img src="{{ asset('uploads/images/' ~ app.user.avatar ~ '')}}" id="avatarNavBar">
+                        {% endif %}
+                        Bonjour {{ app.user.firstname }}
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('admin') }}" class="dropdown-item"><i class="fas fa-wrench"></i> Administration</a>
+                        <a href="{{ path('fos_user_change_password') }}" class="dropdown-item"><i class="fas fa-key"></i> Changer mon mot de passe</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_COIFFEUR') %}
+                        <a href="{{ path('gestion') }}" class="dropdown-item"><i class="fas fa-table"></i> Mon tableau de bord</a>
+                        <a href="{{ path('profilCoiffeur') }}" class="dropdown-item"><i class="fas fa-user"></i> Mon profil</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_CLIENT') %}
+                        <a href="{{ path('informations') }}" class="dropdown-item"><i class="far fa-id-card"></i> Mes informations</a>
+                        <a href="{{ path('orders') }}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Mes commandes</a>
+                        <a href="{{ path('fos_user_change_password') }}" class="dropdown-item"><i class="fas fa-key"></i> Changer mon mot de passe</a>
+                        {% endif %}
+                        <a href="{{ path('fos_user_security_logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    </div>
+                </div>
+                {% else %}
+                <a href="{{ path('fos_user_security_login') }}" class="btn btn-outline-success mr-sm-2">Se connecter</a>
+                <a href="{{ path('professionnel') }}" class="btn btn-outline-info my-2 my-sm-0">Je suis un Professionnel</a>
+                {% endif %}
+            </div>
         </div>
-      </div>
     </nav>
 
     {% block body %}{% endblock %}
 
-    {% block javascripts %}
-      {% javascripts 
+        <!-- Footer -->
+        <footer class="page-footer font-small gray pt-4">
+
+            <!-- Footer Links -->
+            <div class="container-fluid text-center text-md-left">
+
+              <!-- Grid row -->
+              <div class="row">
+
+                <!-- Grid column -->
+                <div class="col-md-6 mt-md-0 mt-3">
+
+                  <!-- Content -->
+                  <h5 class="text-uppercase">Peigne & Ciseaux</h5>
+                  <p>Peigne & Ciseaux aide à mettre en relation des coiffeurs indépendants avec des clients</p>
+              </div>
+
+              <!-- Grid column -->
+              <div class="col-md-3 mb-md-0 mb-3">
+
+                <!-- Links -->
+                <h5 class="text-uppercase">À propos de nous</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="">Qui sommes-nous ?</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mentions') }}">Mentions légales</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('professionnel') }}">Rejoignez-nous</a>
+                    </li>
+                    <li>
+                        <a href="">Aide</a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright Peigne & Ciseaux</div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+{% block javascripts %}
+    {% javascripts 
         '@AppBundle/Resources/public/js/jquery-3.3.1.min.js'
         '@AppBundle/Resources/public/js/bootstrap.min.js'
         '@AppBundle/Resources/public/js/bootstrap.bundle.min.js' 
-      %}
+        %}
         <script src="{{ asset_url }}"></script>
-      {% endjavascripts %}
-    {% endblock %}
-  </body>
+    {% endjavascripts %}
+    <script>
+            /**
+             * chargement du formulaire d'insciption
+             */
+             $("body").on("click", "#inscription-tab", function (e) {
+                $.ajax({
+                    url: "{{ path('fos_user_registration_register') }}",
+                    type: 'POST',
+                    success: function (jsonData) {
+                        if (jsonData) {
+                            $('#ajax-loading').hide();
+                            $("#formInscription").html(jsonData).show('slow');
+                        }
+                    }
+                });
+            });
+    </script>
+
+{% endblock %}
+</body>
 </html>

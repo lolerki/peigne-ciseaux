@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+
+	<h3>Modifier ma coupe</h3>
+
+	<div class="formCenter">
+		{{ form_start(form, {'method': 'POST',  'attr': {'id': 'FormAnnonce', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+		<div class="form-group">
+			{{ form_label(form.category) }}
+			{{ form_widget(form.category, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.name) }}
+			{{ form_widget(form.name, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.price) }}
+			{{ form_widget(form.price, { 'attr': {'class': 'form-control form-control-sm col-sm-9'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_widget(form.subEnregistrer, { 'attr': {'class': 'btn btn-default colorBtn'}}) }}
+		</div>
+
+		{#  {{ form_errors(form.description) }}#}
+
+		{{ form_rest(form) }}
+		{{ form_end(form) }}
+	</div>
+</div>
+{% endblock %}

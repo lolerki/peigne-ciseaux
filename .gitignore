@@ -1,3 +1,11 @@
+
+# junk
+.DS_Store
+.project
+.settings
+.idea
+ngrok
+
 # Email spool folder
 /app/spool/*
 
@@ -40,3 +48,4 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+/nbproject/private/

@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\RechercheType;
+use AppBundle\Entity\User;
 
 class DefaultController extends Controller
 {
@@ -14,29 +15,35 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-
+        $userByRoles = false;
+        
         //formulaire recherche
         $rechercheForm = $this->createForm(RechercheType::class);
         $rechercheForm->handleRequest($request);
 
+        if ($rechercheForm->isSubmitted() && $rechercheForm->isValid()) {
 
-   //     if ($form->isSubmitted() && $form->isValid()) {
-        // $form->getData() holds the submitted values
-        // but, the original `$task` variable has also been updated
-    //    $task = $form->getData();
+            $data = $rechercheForm->getData();
 
-        // ... perform some action, such as saving the task to the database
-        // for example, if Task is a Doctrine entity, save it!
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($task);
-        // $em->flush();
+            $city = $data['recherche'];
 
-   //     return $this->redirectToRoute('task_success');
-  //  }
+            $userByRoles = $this->getDoctrine()->getRepository(User::class)->findAllUserByRoles($city);
+        }
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'form' => $rechercheForm->createView(),
+            'search' => $userByRoles
         ]);
+    }
+
+    /**
+     * @Route("/mentions-legales", name="mentions")
+     */
+    public function mentionsAction(Request $request)
+    {
+
+        // replace this example code with whatever you need
+        return $this->render('default/mentions.html.twig');
     }
 }

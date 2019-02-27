@@ -16,12 +16,14 @@ class RechercheType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('recherche', TextType::class, array(
-                    'label' => 'Recherche',
+                        'attr' => array(
+        'placeholder' => 'Entrez le nom d\'une ville'
+    ),
                     'required' => true,
                 ))
                 ->add('subRecherche', SubmitType::class, array(
                     'label' => 'Recherche',
-                ));
+        ));
     }
 
     /**

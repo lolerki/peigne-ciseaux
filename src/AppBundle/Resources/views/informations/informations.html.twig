@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    {% if is_granted('ROLE_CLIENT') %}
+
+    <h3 class="text-center">Modifier mon profil</h3>
+    <hr>
+    <div class="col-md-12">
+        {{ form_start(formInfoClient, {'attr': {'id': 'formInfoClient', 'role': 'form', 'class' : 'form-horizontal' }}) }}
+
+        <div class="form-group">
+            {{ form_label(formInfoClient.lastName) }}
+            {{ form_widget(formInfoClient.lastName, { 'attr': {'id': 'lastname', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.lastName) }}
+        <div class="form-group">
+            {{ form_label(formInfoClient.firstName) }}
+            {{ form_widget(formInfoClient.firstName, { 'attr': {'id': 'firstname', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.firstName) }}
+        <div class="form-group">
+            {{ form_label(formInfoClient.phonenumber) }}
+            {{ form_widget(formInfoClient.phonenumber, { 'attr': {'id': 'phone', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.phonenumber) }}
+
+        <div class="form-group">
+            {{ form_label(formInfoClient.street) }}
+            {{ form_widget(formInfoClient.street, { 'attr': {'id': 'autocomplete', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.street) }}
+
+        <div class="form-group">
+            {{ form_label(formInfoClient.city) }}
+            {{ form_widget(formInfoClient.city, { 'attr': {'id': 'street_number', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.city) }}
+        <div class="form-group">
+            {{ form_label(formInfoClient.zipcode) }}
+            {{ form_widget(formInfoClient.zipcode, { 'attr': {'id': 'postal_code', 'class': 'form-control form-control-sm col-sm-9'}}) }}
+        </div>
+        {{ form_errors(formInfoClient.zipcode) }}
+
+        {{ form_widget(formInfoClient.subEnregistrer, { 'attr': {'id': 'btn', 'class': 'btn btn-success'}}) }}
+
+        {{ form_rest(formInfoClient) }}
+        {{ form_end(formInfoClient) }}
+
+    </div>
+    {% else %}
+
+    <div class="alert alert-info">Ooops ! Une erreur c'est produite !</div>
+
+    {% endif %}
+</div>
+
+
+{% endblock %}

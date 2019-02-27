@@ -29,6 +29,26 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    AppBundle\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%images_directory%'
+
+    AppBundle\EventListener\ImageUploadListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    app.form.registration:
+        class: UserBundle\Form\Type\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    app_user.registration_listener:
+        class: UserBundle\EventListener\RegistrationListener
+        arguments: []
+        tags:
+            - { name: kernel.event_subscriber }
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
